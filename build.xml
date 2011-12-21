@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="XPathJS" default="build">
+	<!-- properties -->
+	<property name="yuicompressor.file" value="lib/yuicompressor/build/yuicompressor-2.4.8pre.jar"/>
+	
+	<!-- clean -->
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="build" defaultexcludes="false" includes="*"/>
+		</delete>
+	</target>
+	
+	<!-- build -->
+	<target name="build" depends="clean">
+		<apply executable="java" parallel="false" dest="build">
+			<fileset file="dom-xpath.js"/>
+			<arg line="-jar"/>
+			<arg path="${yuicompressor.file}"/>
+			<srcfile/>
+			<arg line="-o"/>
+			<mapper type="glob" from="*.js" to="*.min.js"/>
+			<targetfile/>
+		</apply>
+	</target>
+</project>
