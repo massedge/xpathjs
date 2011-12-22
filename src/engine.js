@@ -1383,9 +1383,10 @@ XPathJS = (function(){
 		
 		nodeSupported = function(contextNode)
 		{
-			if (!contextNode || 
-				typeof contextNode.nodeType !== 'number' ||
-				(
+			if (!contextNode) {
+				throw createError(9, 'NOT_SUPPORTED_ERR', 'Context node was not supplied.');
+			}
+			else if (
 					contextNode.nodeType != 9 && // Document
 					contextNode.nodeType != 1 && // Element
 					contextNode.nodeType != 2 && // Attribute
@@ -1394,12 +1395,10 @@ XPathJS = (function(){
 					contextNode.nodeType != 8 && // Comment
 					contextNode.nodeType != 7 && // ProcessingInstruction
 					contextNode.nodeType != 13   // XPathNamespace
-				)
 			) {
 				throw createError(9, 'NOT_SUPPORTED_ERR', 'The supplied node type is not supported. (nodeType: ' + contextNode.nodeType + ')');
 			}
-			
-			if (contextNode.nodeType == 2 && !contextNode.specified)
+			else if (contextNode.nodeType == 2 && !contextNode.specified)
 			{
 				throw createError(9, 'NOT_SUPPORTED_ERR', 'The supplied node is a non-specified attribute node. Only specified attribute nodes are supported.');
 			}
