@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>XPathJS Example - Simple</title>
+	
+	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssbase/cssbase.css" type="text/css">
+	
+	<script type="text/javascript" src="../build/xpathjs.js"></script>
+	
+	<script type="text/javascript">
+		// bind XPath methods to document and window objects
+		XPathJS.bindDomLevel3XPath(
+			
+			// initialize XPath methods
+			XPathJS.createDomLevel3XPathBindings({
+			  
+				// treat XPath expressions as case-insensitive
+				'case-sensitive': false
+			})
+		);
+		
+		// run example
+		function run()
+		{
+			var result = document.evaluate(
+				'//ul/li/text()', // XPath expression
+				document, // context node
+				null, // namespace resolver
+				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
+			);
+			
+			for (var i = 0; i < result.snapshotLength; i++) {
+				var node = result.snapshotItem(i);
+				alert(node.nodeValue);
+			}
+		}
+	</script>
+</head>
+
+<body class="yui3-skin-sam">
+
+	<ul>
+		<li>Red</li>
+		<li>Blue</li>
+		<li>Green</li>
+	</ul>
+	
+	<input type="button" value="Get a list of all bullet text nodes" onclick="run();" />
+</body>
+</html>
