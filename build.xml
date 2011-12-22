@@ -2,6 +2,7 @@
 <project name="XPathJS" default="build">
 	<!-- properties -->
 	<property name="yuicompressor.file" value="lib/yuicompressor/build/yuicompressor-2.4.8pre.jar"/>
+	<property name="pegjs.file" value="pegjs"/>
 	
 	<!-- clean -->
 	<target name="clean">
@@ -12,8 +13,28 @@
 	
 	<!-- build -->
 	<target name="build" depends="clean">
+		
+		<!-- generate parser from grammar -->
+		<apply executable="pegjs.cmd" parallel="false" dest="build" failonerror="true">
+			<fileset file="xpath.pegjs"/>
+			<arg line="--export-var"/>
+			<arg line="XPathJS._parser"/>
+			<srcfile/>
+			<mapper type="glob" from="*.pegjs" to="*.js"/>
+			<targetfile/>
+		</apply>
+		
+		<!-- combine files -->
+		<concat destfile="build/xpathjs.js">
+			<filelist>
+				<file name="dom-xpath.js"/>
+				<file name="build/xpath.js"/>
+			</filelist>
+		</concat>
+		
+		<!-- minify files -->
 		<apply executable="java" parallel="false" dest="build">
-			<fileset file="dom-xpath.js"/>
+			<fileset file="build/xpathjs.js"/>
 			<arg line="-jar"/>
 			<arg path="${yuicompressor.file}"/>
 			<srcfile/>
@@ -21,5 +42,6 @@
 			<mapper type="glob" from="*.js" to="*.min.js"/>
 			<targetfile/>
 		</apply>
+		
 	</target>
 </project>

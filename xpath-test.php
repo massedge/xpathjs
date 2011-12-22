@@ -33,13 +33,9 @@ if ($serve_xml)
 		<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js" type="text/javascript"></script>
 		
 		<?php if(!$use_native): ?>
-		<script src="build/xpath.js" type="text/javascript"></script>
 		<script src="dom-xpath.js" type="text/javascript"></script>
-		<?php endif; ?>
-
-		<script src="jsDump.js" type="text/javascript"></script>
+		<script src="build/xpath.js" type="text/javascript"></script>
 		
-		<?php if(!$use_native): ?>
 		<script type="text/javascript">
 			XPathJS.bindDomLevel3XPath(XPathJS.createDomLevel3XPathBindings({
 				<?php if (!$serve_xml): ?>

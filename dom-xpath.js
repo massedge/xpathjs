@@ -1884,10 +1884,10 @@ XPathJS = (function(){
 			
 			// Parse the expression
 			try {
-				tree = xpathParser.parse(expression);
+				tree = XPathJS._parser.parse(expression);
 			} catch(err) {
 				message = 'The expression is not a legal expression.';
-				if (err instanceof xpathParser.SyntaxError)
+				if (err instanceof XPathJS._parser.SyntaxError)
 				{
 					message += ' (line: ' + err.line + ', character: ' + err.column + ')';
 				}
