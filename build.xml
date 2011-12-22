@@ -16,7 +16,7 @@
 		
 		<!-- generate parser from grammar -->
 		<apply executable="pegjs.cmd" parallel="false" dest="build" failonerror="true">
-			<fileset file="xpath.pegjs"/>
+			<fileset file="src/parser.pegjs"/>
 			<arg line="--export-var"/>
 			<arg line="XPathJS._parser"/>
 			<srcfile/>
@@ -27,8 +27,8 @@
 		<!-- combine files -->
 		<concat destfile="build/xpathjs.js">
 			<filelist>
-				<file name="dom-xpath.js"/>
-				<file name="build/xpath.js"/>
+				<file name="src/engine.js"/>
+				<file name="build/parser.js"/>
 			</filelist>
 		</concat>
 		
