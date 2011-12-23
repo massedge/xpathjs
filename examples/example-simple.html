@@ -12,15 +12,8 @@
 	
 	<script type="text/javascript">
 		// bind XPath methods to document and window objects
-		XPathJS.bindDomLevel3XPath(
-			
-			// initialize XPath methods
-			XPathJS.createDomLevel3XPathBindings({
-			  
-				// treat XPath expressions as case-insensitive
-				'case-sensitive': false
-			})
-		);
+		// NOTE: This will overwrite native XPath implementation if it exists
+		XPathJS.bindDomLevel3XPath();
 		
 		// run example
 		function run()
@@ -29,9 +22,10 @@
 				'//ul/li/text()', // XPath expression
 				document, // context node
 				null, // namespace resolver
-				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
+				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
 			);
 			
+			// loop through results
 			for (var i = 0; i < result.snapshotLength; i++) {
 				var node = result.snapshotItem(i);
 				alert(node.nodeValue);

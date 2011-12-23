@@ -23,17 +23,8 @@ Getting Started
   3. Initialize XPathJS:
      
          // bind XPath methods to document and window objects
-         XPathJS.bindDomLevel3XPath(
-             
-             // initialize XPath methods
-             XPathJS.createDomLevel3XPathBindings({
-                 
-                 // treat XPath expressions as case-insensitive
-                 'case-sensitive': false
-             })
-         );
-     
-     NOTE: This will overwrite native XPath implementation if it exists.
+         // NOTE: This will overwrite native XPath implementation if it exists
+         XPathJS.bindDomLevel3XPath();
      
   4. You can now use XPath expressions to query the DOM:
      
@@ -44,6 +35,7 @@ Getting Started
             XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
         );
         
+        // loop through results
         for (var i = 0; i < result.snapshotLength; i++) {
             var node = result.snapshotItem(i);
             alert(node.nodeValue);

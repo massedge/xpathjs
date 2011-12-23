@@ -1849,7 +1849,7 @@ XPathJS = (function(){
 			/**
 			 * Specifies whether node name tests should be case sensitive
 			 */
-			'case-sensitive': true
+			'case-sensitive': false
 		},
 		
 		/**
