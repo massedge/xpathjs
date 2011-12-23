@@ -2050,7 +2050,7 @@ XPathJS = (function(){
 			
 			context = new Context(contextNode, 1, 1, {}, functions, this.namespaceMapping, this.opts);
 			
-			return new XPathResult(
+			return XPathResult.factory(
 				context,
 				type,
 				evaluateExpressionTree(context, this.parsedExpression.tree)
@@ -3929,40 +3929,93 @@ XPathJS = (function(){
 				this.booleanValue = value.toBoolean();
 				break;
 			
-			case XPathResult.ANY_UNORDERED_NODE_TYPE:
-				this.resultType = XPathResult.ANY_UNORDERED_NODE_TYPE;
-				value = value.toNodeSet();
-				this.singleNodeValue = (value.length) ? value[0] : null;
-				break;
-				
+			case XPathResult.UNORDERED_NODE_ITERATOR_TYPE:
+			case XPathResult.ORDERED_NODE_ITERATOR_TYPE:
 			case XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE:
-				this.resultType = XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE;
-				if (!value instanceof NodeSetType)
-				{
-					throw new Error('Expected result of type "node-set", got: "' + value.type + '"');
-				}
-				this._value = value.toNodeSet();
-				this.snapshotLength = this._value.length;
-				break;
-			
 			case XPathResult.ORDERED_NODE_SNAPSHOT_TYPE:
-				this.resultType = XPathResult.ORDERED_NODE_SNAPSHOT_TYPE;
+			case XPathResult.ANY_UNORDERED_NODE_TYPE:
+			case XPathResult.FIRST_ORDERED_NODE_TYPE:
 				if (!value instanceof NodeSetType)
 				{
 					throw new Error('Expected result of type "node-set", got: "' + value.type + '"');
 				}
 				
-				// ensure in document order
-				value.sortDocumentOrder();
+				this.resultType = type;
 				
-				this._value = value.toNodeSet();
-				this.snapshotLength = this._value.length;
+				switch(type)
+				{
+					case XPathResult.UNORDERED_NODE_ITERATOR_TYPE:
+					case XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE:
+						this._value = value.toNodeSet();
+						this.snapshotLength = this._value.length;
+						break;
+					
+					case XPathResult.ORDERED_NODE_ITERATOR_TYPE:
+					case XPathResult.ORDERED_NODE_SNAPSHOT_TYPE:
+						// ensure in document order
+						value.sortDocumentOrder();
+						
+						this._value = value.toNodeSet();
+						this.snapshotLength = this._value.length;
+						break;
+					
+					case XPathResult.ANY_UNORDERED_NODE_TYPE:
+						value = value.toNodeSet();
+						this.singleNodeValue = (value.length) ? value[0] : null;
+						break;
+					
+					case XPathResult.FIRST_ORDERED_NODE_TYPE:
+						// ensure in document order
+						value.sortDocumentOrder();
+						value = value.toNodeSet();
+						this.singleNodeValue = (value.length) ? value[0] : null;
+						break;
+					
+					default:
+						throw new XPathException(XPathException.TYPE_ERR, 'TODO: Implement result type: ' + type);
+						break;
+				}
+				
 				break;
 			
 			default:
 				throw new XPathException(XPathException.TYPE_ERR, 'XPath result type not supported. (type: ' + type + ')');
 				break;
 		};
+	}
+	
+	XPathResult.factory = function(context, type, value)
+	{
+		var result;
+		
+		if (type !== XPathResult.ANY_TYPE)
+		{
+			return new XPathResult(context, type, value);
+		}
+		
+		// handle any type result
+		if (value instanceof NodeSetType)
+		{
+			result = new XPathResult(context, XPathResult.UNORDERED_NODE_ITERATOR_TYPE, value);
+		}
+		else if (value instanceof NumberType)
+		{
+			result = new XPathResult(context, XPathResult.NUMBER_TYPE, value);
+		}
+		else if (value instanceof BooleanType)
+		{
+			result = new XPathResult(context, XPathResult.BOOLEAN_TYPE, value);
+		}
+		else if (value instanceof StringType)
+		{
+			result = new XPathResult(context, XPathResult.STRING_TYPE, value);
+		}
+		else
+		{
+			throw new XPathException(XPathException.TYPE_ERR, 'Internal Error: Unsupported value type: ' + typeof value);
+		}
+		
+		return result;
 	}
 	
 	XPathResult.prototype = {
@@ -4024,13 +4077,34 @@ XPathJS = (function(){
 		 */
 		snapshotLength: null,
 		
+		_iteratorIndex: 0,
+		
 		iterateNext: function()
 		{
+			if (
+				this.resultType != XPathResult.UNORDERED_NODE_ITERATOR_TYPE &&
+				this.resultType != XPathResult.ORDERED_NODE_ITERATOR_TYPE
+			) {
+				throw new XPathException(XPathException.TYPE_ERR, 'iterateNext() method may only be used with results of type UNORDERED_NODE_ITERATOR_TYPE or ORDERED_NODE_ITERATOR_TYPE');
+			}
 			
+			if (this._iteratorIndex < this._value.length)
+			{
+				return this._value[this._iteratorIndex++];
+			}
+			
+			return null;
 		},
 		
 		snapshotItem: function(index)
 		{
+			if (
+				this.resultType != XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE &&
+				this.resultType != XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
+			) {
+				throw new XPathException(XPathException.TYPE_ERR, 'snapshotItem() method may only be used with results of type UNORDERED_NODE_SNAPSHOT_TYPE or ORDERED_NODE_SNAPSHOT_TYPE');
+			}
+			
 			return this._value[index];
 		}
 	}
