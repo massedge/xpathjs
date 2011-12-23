@@ -41,7 +41,7 @@ Getting Started
             alert(node.nodeValue);
         }
 
-You will find some [working examples here](http://www.pokret.org/xpathjs/examples/).
+Take a look at some [working examples](http://www.pokret.org/xpathjs/examples/) to get a better idea of how to use XPathJS.
 
 More examples, configuration options, and caveat info coming soon...
 
@@ -62,7 +62,7 @@ Development
 XPathJS is developed by [Andrej Pavlovic](mailto:andrej.pavlovic@pokret.org). You are more than welcome to contribute by [logging issues](https://github.com/andrejpavlovic/xpathjs/issues), [sending pull requests](http://help.github.com/send-pull-requests/), or [just giving feedback](mailto:andrej.pavlovic@pokret.org).
 
 License
--------
+--------
 
 We have released XPathJS under the AGPLv3. Note that we sell commercial licenses as well. You will need to sign a contributor agreement when contributing code due to the dual-license nature of the project.
 
@@ -75,3 +75,23 @@ Here are some other javascript-based XPath alternatives out there:
   * [JavaScript-XPath](http://coderepos.org/share/wiki/JavaScript-XPath)
   * [Google AJAXSLT](http://goog-ajaxslt.sourceforge.net/)
   * [Cameron McCormack](http://mcc.id.au/xpathjs)
+
+
+Build
+--------
+
+In order to build the code yourself, you will need the following tools:
+
+  1. [Apache Ant](http://ant.apache.org/)
+  2. [Node.js](http://nodejs.org/)
+  3. [PEG.js](http://pegjs.majda.cz/) (_npm install --global pegjs_)
+
+Once the tools are installed, do the following:
+
+    git clone https://github.com/andrejpavlovic/xpathjs.git
+    cd xpathjs
+    git submodule init
+    git submodule update
+    ant build
+
+NOTE: Currently the build script only works in Windows, but it can be easily adjusted to work in Linux. Take a look at [build.xml](https://github.com/andrejpavlovic/xpathjs/blob/master/build.xml) file.
