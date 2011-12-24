@@ -1221,7 +1221,7 @@ XPathJS = (function(){
 					if (result === 0 || (result & 16) === 16)
 					{
 						// return result
-						return result;
+						return 4 + 16;
 					}
 					// else if b2 contains a
 					else if ((result & 8) === 8)
@@ -1264,7 +1264,7 @@ XPathJS = (function(){
 					if (result === 0 || (result & 8) === 8)
 					{
 						// return result
-						return result;
+						return 2 + 8;
 					}
 					// else if a2 contains b
 					else if ((result & 16) === 16)
