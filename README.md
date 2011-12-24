@@ -18,7 +18,7 @@ Getting Started
   1. Download [build/xpathjs.min.js](https://raw.github.com/andrejpavlovic/xpathjs/master/build/xpathjs.min.js) file.
   
   2. Include xpathjs.min.js in the \<head> of your HTML document.
-     NOTE: Make sure HTML document is in standards mode i.e. it has a !DOCTYPE declaration at the top!
+     NOTE: Make sure HTML document is in strict mode i.e. it has a !DOCTYPE declaration at the top!
   
   3. Initialize XPathJS:
      
@@ -42,6 +42,8 @@ Getting Started
         }
 
 Take a look at some [working examples](http://www.pokret.org/xpathjs/examples/) to get a better idea of how to use XPathJS.
+
+We would strongly recommend for you to take a look at the [**CAVEATS**](https://github.com/andrejpavlovic/xpathjs/blob/master/CAVEATS.md) document to get a better understanding of XPathJS limitations.
 
 More examples, configuration options, and caveat info coming soon...
 

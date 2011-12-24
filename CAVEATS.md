@@ -1,0 +1,86 @@
+XPathJS - Caveats
+=======
+
+While we strive to make XPathJS conform as closely as possible to [XPath 1.0](http://www.w3.org/TR/xpath/) and [DOM Level 3 XPath](http://www.w3.org/TR/DOM-Level-3-XPath/) specifications, we have to work within the technical limits of the browser.
+
+We strongly recommend that anyone using XPathJS take a quick glance at the notes and issues below as it's good to keep them in mind while using the library.
+
+
+Getting Checkbox and Radio Button Values
+--------
+
+Expressions such as **option[@selected]** or **input[@checked]** should not be used to check whether a checkbox or radio button are currently selected. Use the corresponding javascript properties on the option or input object to check if selected.
+
+Example:
+
+	<script type="text/javascript">
+	// get all options
+	var result = document.evaluate('option', document, null, 7, null);
+	
+	for (var j = 0; j < result.snapshotLength; j++) {
+		var item = result.snapshotItem(j);
+	
+		// check option property
+		if (item.selected)
+		{
+			alert('Selected:' + item.value);
+			break;
+		}
+	}
+	</script>
+
+This also applies to _@value_ and _@disabled_. All of these should be treated as node properties, not attributes.
+
+See how jquery deals with element properties vs attributes [using the prop() instead of attr() function](http://api.jquery.com/prop/).
+
+
+
+Only Strict Mode Supported
+--------
+
+Please ensure that a doctype is declared at the top of the document when using XPathJS as we only support [strict mode](http://www.quirksmode.org/css/quirksmode.html).
+
+
+
+Only _Specified_ Attribute Supported
+--------
+
+[Specified attributes](http://reference.sitepoint.com/javascript/Attr/specified) are those that are explicitly set in HTML or via Javascript. IE8 and below tend to set _default_ attribute values on nodes, so that each node may have 80 or more attributes, all of which have the value null.
+
+XPathJS only works with specified attributes in order to improve performance and avoid including meaningless attribute nodes in the result.
+
+
+
+Order of Attributes
+--------
+
+The [order of attributes](http://reference.sitepoint.com/javascript/Node/attributes) can vary from browser to browser.
+
+Example:
+
+    <div class="asdf" style="color:blue;"></div>
+
+Call XPathJS:
+
+    document.evaluate('//div/attribute::*', document, null, 7);
+
+May return **class** then **style** attribute in Chrome, while it returns **style**, then **class** in Firefox.
+
+The order of attributes usually doesn't matter, but this is something to keep in mind.
+
+
+
+IE6 - Exception Bug
+--------
+
+Exceptions that originate from a function attached to the _document_ object will not propagate outside of the function. This is important to note in calls such as:
+
+    document.createExpression('/div/+++', null);
+
+Since the above is an invalid XPath expression, an INVALID_EXPRESSION_ERR will be thrown in all browsers except IE6. IE6 will just ignore the expection.
+
+The only way to ensure that exceptions are thrown in all browsers including IE6 is to either not attach XPath functions to *document*, or to call the function like so:
+
+    document.createExpresssion.call(document, '/div/span', null);
+
+See [Stack Overflow discussion](http://stackoverflow.com/questions/7459173/ie6-try-catch-block-does-not-work-on-custom-document-somefunction-call) for more details.
