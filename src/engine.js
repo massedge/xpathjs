@@ -3972,7 +3972,7 @@ XPathJS = (function(){
 						break;
 					
 					default:
-						throw new XPathException(XPathException.TYPE_ERR, 'TODO: Implement result type: ' + type);
+						throw new XPathException(XPathException.TYPE_ERR, 'XPath result type not supported. (type: ' + type + ')');
 						break;
 				}
 				
