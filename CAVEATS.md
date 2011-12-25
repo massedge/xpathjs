@@ -6,6 +6,78 @@ While we strive to make XPathJS conform as closely as possible to [XPath 1.0](ht
 We strongly recommend that anyone using XPathJS take a quick glance at the notes and issues below as it's good to keep them in mind while using the library.
 
 
+Namespaces and id()
+--------
+
+In order to find an element by id, that element must belong to a namespace.
+
+For example:
+
+	<!DOCTYPE HTML>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    	<head>
+    		<script src="../build/xpathjs.js" type="text/javascript"></script>
+    	</head>
+    	<body>
+    		<div id="myDiv"></div>
+    		
+    		<script type="text/javascript">
+    			XPathJS.bindDomLevel3XPath();
+    			
+    			if (document.evaluate("id('myDiv')", document, null, 3).booleanValue)
+    			{
+    				// we will find it
+    				alert("Found myDiv!");
+    			}
+    		</script>
+    	</body>
+    </html>
+
+Now, if we remove _xmlns="http://www.w3.org/1999/xhtml"_ in the example above, _id('myDiv')_ will not find the div element. This is because the _id_ attribute now belongs to the empty namespace.
+
+By default, the following attributes are treated as an id in respective namespaces:
+
+	{
+		'http://www.w3.org/XML/1998/namespace' => 'id'
+		'http://www.w3.org/1999/xhtml' => 'id'
+	}
+
+You can also add your own id definitions like in the following example:
+
+	<!DOCTYPE HTML>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:myns="http://www.pokret.org/example">
+    	<head>
+    		<script src="../build/xpathjs.js" type="text/javascript"></script>
+    	</head>
+    	<body>
+    		<div id="myDiv" myns:myid="mySpecialDiv"></div>
+    		
+    		<script type="text/javascript">
+    			XPathJS.bindDomLevel3XPath( // bind XPathJS
+    				
+    				XPathJS.createDomLevel3XPathBindings({ // create XPathJS functions
+    					
+    					'unique-ids': { // configure attributes to be used as IDs
+    						'http://www.pokret.org/example': 'myid'
+    					}
+    				})
+    			);
+    			
+    			if (document.evaluate("id('mySpecialDiv')", document, null, 3).booleanValue)
+    			{
+    				// we will find it
+    				alert("Found mySpecialDiv!");
+    			}
+    		</script>
+    	</body>
+    </html>
+
+
+Suggested reading:
+
+  * [id() function](http://www.w3.org/TR/xpath/#function-id)
+  * [Applying Namespaces to Elements and Attributes](http://www.w3.org/TR/REC-xml-names/#scoping-defaulting)
+
 Getting Checkbox and Radio Button Values
 --------
 
@@ -68,6 +140,18 @@ May return **class** then **style** attribute in Chrome, while it returns **styl
 
 The order of attributes usually doesn't matter, but this is something to keep in mind.
 
+No DTD Support
+--------
+
+Any DTD declaration beyond the DOCTYPE will be ignored.
+
+Example:
+
+	<!DOCTYPE html [
+		<!ATTLIST img myid ID #REQUIRED>
+	]>
+
+The ATTLIST declaration will have no effect on XPathJS.
 
 
 IE6 - Exception Bug
