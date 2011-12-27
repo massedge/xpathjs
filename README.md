@@ -73,11 +73,10 @@ Alternatives
 
 Here are some other javascript-based XPath alternatives out there:
 
-  * [Llama's XPath.js](http://llamalab.com/js/xpath/)
-  * [JavaScript-XPath](http://coderepos.org/share/wiki/JavaScript-XPath)
-  * [Google AJAXSLT](http://goog-ajaxslt.sourceforge.net/)
-  * [Cameron McCormack](http://mcc.id.au/xpathjs)
-
+  * [JavaScript-XPath](http://coderepos.org/share/wiki/JavaScript-XPath) - fastest
+  * [Llama's XPath.js](http://llamalab.com/js/xpath/) - tiniest
+  * [Cameron McCormack](http://mcc.id.au/xpathjs) - non-standard interface, but should have namespace support
+  * [Google AJAXSLT](http://goog-ajaxslt.sourceforge.net/) - oldest
 
 Build
 --------
