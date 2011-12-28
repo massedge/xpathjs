@@ -104,7 +104,7 @@ YUI().use("node", "io", "get", function (Y) {
 				var result, time, numOfNodes, i,
 					win = iframes[index].contentWindow;
 				
-				try {
+				//try {
 					// start timer
 					time = new Date().valueOf();
 					
@@ -121,12 +121,12 @@ YUI().use("node", "io", "get", function (Y) {
 					
 					if (!nodeTotals[index]) nodeTotals[index] = 0;
 					nodeTotals[index] += numOfNodes;
-				}
+				/*}
 				catch (e) {
 					time = 0;
 					numOfNodes = e.message;
 				}
-				
+				*/
 				row.append(
 					Y.one(document.createElement("td")).append(
 						document.createTextNode(round(time))
@@ -161,8 +161,6 @@ YUI().use("node", "io", "get", function (Y) {
 	
 	function initializeTestFrame(lib, htmlContent, finishedCallback)
 	{
-		var numOfScriptsLoaded = 0;
-		
 		// create iframe
 		var iframe = Y.one(document.createElement('iframe')).setStyle('display', 'none');
 		Y.one(document.body).append(iframe);
@@ -176,26 +174,18 @@ YUI().use("node", "io", "get", function (Y) {
 		doc.close();
 		
 		// load all xpath scripts for this library
-		for(var i=0; i < lib.scripts.length; i++)
-		{
-			Y.Get.script(lib.scripts[i], {
-				onSuccess: function () {
-					numOfScriptsLoaded++;
-					
-					if (numOfScriptsLoaded >= lib.scripts.length)
-					{
-						if (lib.initFn)
-						{
-							// initialize library
-							lib.initFn(win);
-						}
-						
-						finishedCallback();
-					}
-				},
-				win: win
-			});
-		}
+		Y.Get.script(lib.scripts, {
+			onSuccess: function () {
+				if (lib.initFn)
+				{
+					// initialize library
+					lib.initFn(win);
+				}
+				
+				finishedCallback();
+			},
+			win: win
+		});
 		
 		return iframe._node;
 	}
