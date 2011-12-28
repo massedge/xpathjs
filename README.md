@@ -11,6 +11,7 @@ Features
   * No external dependencies, include just a single .js file
   * Regression tested against [hundreds of unit test cases](http://www.pokret.org/xpathjs/tests/).
   * Works in pages served as both, _text/html_ and _application/xhtml+xml_ content types.
+  * [Benchmarked](http://www.pokret.org/xpathjs/benchmark/) against other XPath implementations.
 
 Getting Started
 --------
