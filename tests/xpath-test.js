@@ -4311,6 +4311,109 @@ YUI().use("node", "console", "test", function (Y) {
 		}
 	});
 	
+	Y.xpathjs.test.UnionOperatorTestCase = new Y.Test.Case({
+		name: 'Union Operator Tests',
+		
+		setUp: function()
+		{
+		},
+		
+		tearDown: function()
+		{
+		},
+		
+		_should: {
+			error: {
+			},
+			ignore: {
+			}
+		},
+		
+		testElementNode: function()
+		{
+			checkNodeResult("id('eee40') | id('eee20') | id('eee25') | id('eee10') | id('eee30') | id('eee50')", document, [
+				document.getElementById('eee10'),
+				document.getElementById('eee20'),
+				document.getElementById('eee25'),
+				document.getElementById('eee30'),
+				document.getElementById('eee40'),
+				document.getElementById('eee50')
+			]);
+		},
+		
+		testAttributeElementContains: function()
+		{
+			checkNodeResult("id('eee40')/attribute::*[1] | id('eee30')", document, [
+				document.getElementById('eee30'),
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeElementSame: function()
+		{
+			checkNodeResult("id('eee40')/attribute::*[1] | id('eee40')", document, [
+				document.getElementById('eee40'),
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeElementDifferentTrees: function()
+		{
+			checkNodeResult("id('eee40')/attribute::*[1] | id('eee20')", document, [
+				document.getElementById('eee20'),
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeElementUnderAttribute: function()
+		{
+			checkNodeResult("id('eee40') | id('eee30')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee30').attributes)[0],
+				document.getElementById('eee40')
+			]);
+		},
+		
+		testAttributeElementBothUnderElement: function()
+		{
+			checkNodeResult("id('eee40') | id('eee35')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee35').attributes)[0],
+				document.getElementById('eee40')
+			]);
+		},
+		
+		testAttributeAttributeDifferentElements: function()
+		{
+			checkNodeResult("id('eee35')/attribute::*[1] | id('eee40')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee35').attributes)[0],
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeAttributeContains: function()
+		{
+			checkNodeResult("id('eee30')/attribute::*[1] | id('eee40')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee30').attributes)[0],
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeAttributeContainsReverse: function()
+		{
+			checkNodeResult("id('eee40')/attribute::*[1] | id('eee30')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee30').attributes)[0],
+				filterAttributes(document.getElementById('eee40').attributes)[0]
+			]);
+		},
+		
+		testAttributeAttributeSameElement: function()
+		{
+			checkNodeResult("id('eee40')/attribute::*[2] | id('eee40')/attribute::*[1]", document, [
+				filterAttributes(document.getElementById('eee40').attributes)[0],
+				filterAttributes(document.getElementById('eee40').attributes)[1]
+			]);
+		}
+	});
+	
 	Y.xpathjs.test.DomXPathSuite = new Y.Test.Suite("DOM XPath Suite");
 	//Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.XPathExceptionCase);
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.FunctionNodesetIdCase);
@@ -4328,6 +4431,7 @@ YUI().use("node", "console", "test", function (Y) {
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.StepNodeTestNodeTypeCase);
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.LocationPathCase);
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.ComparisonOperatorCase);
+	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.UnionOperatorTestCase);
 	
 	//create the console
 	var r = new Y.Console({

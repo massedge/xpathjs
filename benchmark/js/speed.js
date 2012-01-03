@@ -3,7 +3,7 @@ speedTests = [
 	{ expression: 'id("level10")/ancestor::*' },
 	{ expression: 'id("level10")/ancestor::SPAN' },
 	{ expression: 'id("level10")/ancestor-or-self::SPAN' },
-	//{ expression: '//attribute::*' },
+	{ expression: '//attribute::*' },
 	{ expression: 'child::HTML/child::BODY/child::H1' },
 	{ expression: 'descendant::node()' },
 	{ expression: 'descendant-or-self::SPAN' },
@@ -104,7 +104,7 @@ YUI().use("node", "io", "get", function (Y) {
 				var result, time, numOfNodes, i,
 					win = iframes[index].contentWindow;
 				
-				//try {
+				try {
 					// start timer
 					time = new Date().valueOf();
 					
@@ -121,12 +121,12 @@ YUI().use("node", "io", "get", function (Y) {
 					
 					if (!nodeTotals[index]) nodeTotals[index] = 0;
 					nodeTotals[index] += numOfNodes;
-				/*}
+				}
 				catch (e) {
 					time = 0;
 					numOfNodes = e.message;
 				}
-				*/
+				
 				row.append(
 					Y.one(document.createElement("td")).append(
 						document.createTextNode(round(time))

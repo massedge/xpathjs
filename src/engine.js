@@ -1092,16 +1092,11 @@ XPathJS = (function(){
 			switch(node.nodeType)
 			{
 				case 2: // attribute
-				case 13: // namespace
-					throw new Error('Internal Error: getComparableNode - Node type not implemented: ' + node.nodeType);
-					return nodeParent(node);
-					break;
-					
 				case 3: // text
 				case 4: // CDATASection
 				case 7: // processing instruction
 				case 8: // comment
-					return node.parentNode;
+					return nodeParent(node);
 					break;
 				
 				case 1: // element
@@ -1110,6 +1105,7 @@ XPathJS = (function(){
 					return node;
 					break;
 				
+				case 13: // namespace
 				default:
 					throw new Error('Internal Error: getComparableNode - Node type not supported: ' + node.nodeType);
 					break;
@@ -1124,10 +1120,9 @@ XPathJS = (function(){
 			var a2,
 				b2,
 				result,
-				ancestor,
 				i,
 				item,
-				compareOriginalVsComparableNode = function(a, b, b2, result, v16, v8, v4, v2) {
+				compareOriginalVsComparableNode = function(a, a2, b, b2, result, v16, v8, v4, v2) {
 					// if a contains b2 or a == b2
 					if (result === 0 || (result & v16) === v16)
 					{
@@ -1137,28 +1132,10 @@ XPathJS = (function(){
 					// else if b2 contains a
 					else if ((result & v8) === v8)
 					{
-						// find (ancestor-or-self::a) that is direct child of b2
-						ancestor = a;
-						while (ancestor.parentNode !== b2)
-						{
-							ancestor = ancestor.parentNode;
-						}
-						
-						// return "a pre b" or "b pre a" depending on which is occurs first in b2.childNodes
-						for(i=0; i<b2.childNodes.length; i++)
-						{
-							item = b2.childNodes.item(i);
-							if (item === ancestor)
-							{
-								return v4;
-							}
-							else if (item === b)
-							{
-								return v2;
-							}
-						}
-						
-						throw new Error('Internal Error: should not get to here. 1');
+						// since b != b2, b is an attribute
+						// and since a == a2, a is a node,
+						// so b has to come before a
+						return v2;
 					}
 					else
 					{
@@ -1254,71 +1231,38 @@ XPathJS = (function(){
 			}
 			else if (a === a2)
 			{
-				return compareOriginalVsComparableNode(a, b, b2, result, 16, 8, 4, 2);
+				return compareOriginalVsComparableNode(a, a2, b, b2, result, 16, 8, 4, 2);
 			}
 			else if (b === b2)
 			{
-				return compareOriginalVsComparableNode(b, a, a2, result, 8, 16, 2, 4);
+				return compareOriginalVsComparableNode(b, b2, a, a2, result, 8, 16, 2, 4);
 			}
 			else
 			{
 				// if a2 contains b2
 				if ((result & 16) === 16)
 				{
-					// return "a pre b" or "b pre a" depending on a or (ancestor-or-self::b2) occurs first in a2.childNodes
-					ancestor = b2;
-					while (ancestor.parentNode !== a2)
-					{
-						ancestor = ancestor.parentNode;
-					}
-					
-					for(i=0; i<a2.childNodes.length; i++)
-					{
-						item = a2.childNodes.item(i);
-						if (item === ancestor)
-						{
-							return 2;
-						}
-						else if (item === a)
-						{
-							return 4;
-						}
-					}
-					
-					throw new Error('Internal Error: should not get to here. 3');
+					// since a and b are attributes, a has to come before b
+					return 4;
 				}
 				// else if b2 contains a2
 				else if ((result & 8) === 8)
 				{
-					// return "a pre b" or "b pre a" depending on b or (ancestor-or-self::a2) occurs first in b2.childNodes
-					ancestor = a2;
-					while (ancestor.parentNode !== b2)
-					{
-						ancestor = ancestor.parentNode;
-					}
-					
-					for(i=0; i<b2.childNodes.length; i++)
-					{
-						item = b2.childNodes.item(i);
-						if (item === ancestor)
-						{
-							return 4;
-						}
-						else if (item === b)
-						{
-							return 2;
-						}
-					}
-					
-					throw new Error('Internal Error: should not get to here. 3');
+					// since a and b are attributes, b has to come before a
+					return 2;
 				}
 				// else if a2 === b2
 				else if (result === 0)
 				{
+					// since a and b are attributes, and both have the same parent
+					// find out which attribute comes first
+					
 					// return "a pre b" or "b pre a" depending on a or b occurs first in a2.childNodes
-					for(i=0; i<a2.childNodes.length; i++)
+					for(i=0; i<a2.attributes.length; i++)
 					{
-						item = a2.childNodes.item(i);
+						item = a2.attributes[i];
+						if (!item.specified) continue;
+						
 						if (item === b)
 						{
 							return 2;
@@ -1329,7 +1273,7 @@ XPathJS = (function(){
 						}
 					}
 					
-					throw new Error('Internal Error: should not get to here. 4');
+					throw new Error('Internal Error: compareDocumentPosition failed to sort attributes.');
 				}	
 				// else
 				else
@@ -1339,7 +1283,7 @@ XPathJS = (function(){
 				}
 			}
 			
-			throw new Error('Internal Error: should not get to here. 5');
+			throw new Error('Internal Error: compareDocumentPosition failed to sort nodes.');
 		},
 		
 		nodeSupported = function(contextNode)
