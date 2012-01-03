@@ -1126,7 +1126,46 @@ XPathJS = (function(){
 				result,
 				ancestor,
 				i,
-				item
+				item,
+				compareOriginalVsComparableNode = function(a, b, b2, result, v16, v8, v4, v2) {
+					// if a contains b2 or a == b2
+					if (result === 0 || (result & v16) === v16)
+					{
+						// return result
+						return v4 + v16;
+					}
+					// else if b2 contains a
+					else if ((result & v8) === v8)
+					{
+						// find (ancestor-or-self::a) that is direct child of b2
+						ancestor = a;
+						while (ancestor.parentNode !== b2)
+						{
+							ancestor = ancestor.parentNode;
+						}
+						
+						// return "a pre b" or "b pre a" depending on which is occurs first in b2.childNodes
+						for(i=0; i<b2.childNodes.length; i++)
+						{
+							item = b2.childNodes.item(i);
+							if (item === ancestor)
+							{
+								return v4;
+							}
+							else if (item === b)
+							{
+								return v2;
+							}
+						}
+						
+						throw new Error('Internal Error: should not get to here. 1');
+					}
+					else
+					{
+						// return result
+						return result;
+					}
+				}
 			;
 			
 			// check for native implementation
@@ -1215,83 +1254,11 @@ XPathJS = (function(){
 			}
 			else if (a === a2)
 			{
-				// if a contains b2 or a == b2
-				if (result === 0 || (result & 16) === 16)
-				{
-					// return result
-					return 4 + 16;
-				}
-				// else if b2 contains a
-				else if ((result & 8) === 8)
-				{
-					// find (ancestor-or-self::a) that is direct child of b2
-					ancestor = a;
-					while (ancestor.parentNode !== b2)
-					{
-						ancestor = ancestor.parentNode;
-					}
-					
-					// return "a pre b" or "b pre a" depending on which is occurs first in b2.childNodes
-					for(i=0; i<b2.childNodes.length; i++)
-					{
-						item = b2.childNodes.item(i);
-						if (item === ancestor)
-						{
-							return 4;
-						}
-						else if (item === b)
-						{
-							return 2;
-						}
-					}
-					
-					throw new Error('Internal Error: should not get to here. 1');
-				}
-				else
-				{
-					// return result
-					return result;
-				}
+				return compareOriginalVsComparableNode(a, b, b2, result, 16, 8, 4, 2);
 			}
 			else if (b === b2)
 			{
-				// if b contains a2 or b == a2
-				if (result === 0 || (result & 8) === 8)
-				{
-					// return result
-					return 2 + 8;
-				}
-				// else if a2 contains b
-				else if ((result & 16) === 16)
-				{
-					// find (ancestor-or-self::b) that is direct child of a2
-					ancestor = b;
-					while (ancestor.parentNode !== a2)
-					{
-						ancestor = ancestor.parentNode;
-					}
-					
-					// return "a pre b" or "b pre a" depending on which is occurs first in a2.childNodes
-					for(i=0; i<a2.childNodes.length; i++)
-					{
-						item = a2.childNodes.item(i);
-						if (item === ancestor)
-						{
-							return 2;
-						}
-						else if (item === a)
-						{
-							return 4;
-						}
-					}
-					
-					throw new Error('Internal Error: should not get to here. 2');
-				}
-				else
-				{
-					// return result
-					return result;
-				}
+				return compareOriginalVsComparableNode(b, a, a2, result, 8, 16, 2, 4);
 			}
 			else
 			{
