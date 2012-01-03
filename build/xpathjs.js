@@ -1209,172 +1209,166 @@ XPathJS = (function(){
 				}
 			}
 			
-			if (a === a2)
+			if (a === a2 && b === b2)
 			{
-				if (b === b2)
+				return result;
+			}
+			else if (a === a2)
+			{
+				// if a contains b2 or a == b2
+				if (result === 0 || (result & 16) === 16)
 				{
-					return result;
+					// return result
+					return 4 + 16;
+				}
+				// else if b2 contains a
+				else if ((result & 8) === 8)
+				{
+					// find (ancestor-or-self::a) that is direct child of b2
+					ancestor = a;
+					while (ancestor.parentNode !== b2)
+					{
+						ancestor = ancestor.parentNode;
+					}
+					
+					// return "a pre b" or "b pre a" depending on which is occurs first in b2.childNodes
+					for(i=0; i<b2.childNodes.length; i++)
+					{
+						item = b2.childNodes.item(i);
+						if (item === ancestor)
+						{
+							return 4;
+						}
+						else if (item === b)
+						{
+							return 2;
+						}
+					}
+					
+					throw new Error('Internal Error: should not get to here. 1');
 				}
 				else
 				{
-					// if a contains b2 or a == b2
-					if (result === 0 || (result & 16) === 16)
+					// return result
+					return result;
+				}
+			}
+			else if (b === b2)
+			{
+				// if b contains a2 or b == a2
+				if (result === 0 || (result & 8) === 8)
+				{
+					// return result
+					return 2 + 8;
+				}
+				// else if a2 contains b
+				else if ((result & 16) === 16)
+				{
+					// find (ancestor-or-self::b) that is direct child of a2
+					ancestor = b;
+					while (ancestor.parentNode !== a2)
 					{
-						// return result
-						return 4 + 16;
+						ancestor = ancestor.parentNode;
 					}
-					// else if b2 contains a
-					else if ((result & 8) === 8)
+					
+					// return "a pre b" or "b pre a" depending on which is occurs first in a2.childNodes
+					for(i=0; i<a2.childNodes.length; i++)
 					{
-						// find (ancestor-or-self::a) that is direct child of b2
-						ancestor = a;
-						while (ancestor.parentNode !== b2)
+						item = a2.childNodes.item(i);
+						if (item === ancestor)
 						{
-							ancestor = ancestor.parentNode;
+							return 2;
 						}
-						
-						// return "a pre b" or "b pre a" depending on which is occurs first in b2.childNodes
-						for(i=0; i<b2.childNodes.length; i++)
+						else if (item === a)
 						{
-							item = b2.childNodes.item(i);
-							if (item === ancestor)
-							{
-								return 4;
-							}
-							else if (item === b)
-							{
-								return 2;
-							}
+							return 4;
 						}
-						
-						throw new Error('Internal Error: should not get to here. 1');
 					}
-					else
-					{
-						// return result
-						return result;
-					}
+					
+					throw new Error('Internal Error: should not get to here. 2');
+				}
+				else
+				{
+					// return result
+					return result;
 				}
 			}
 			else
 			{
-				if (b === b2)
+				// if a2 contains b2
+				if ((result & 16) === 16)
 				{
-					// if b contains a2 or b == a2
-					if (result === 0 || (result & 8) === 8)
+					// return "a pre b" or "b pre a" depending on a or (ancestor-or-self::b2) occurs first in a2.childNodes
+					ancestor = b2;
+					while (ancestor.parentNode !== a2)
 					{
-						// return result
-						return 2 + 8;
+						ancestor = ancestor.parentNode;
 					}
-					// else if a2 contains b
-					else if ((result & 16) === 16)
+					
+					for(i=0; i<a2.childNodes.length; i++)
 					{
-						// find (ancestor-or-self::b) that is direct child of a2
-						ancestor = b;
-						while (ancestor.parentNode !== a2)
+						item = a2.childNodes.item(i);
+						if (item === ancestor)
 						{
-							ancestor = ancestor.parentNode;
+							return 2;
 						}
-						
-						// return "a pre b" or "b pre a" depending on which is occurs first in a2.childNodes
-						for(i=0; i<a2.childNodes.length; i++)
+						else if (item === a)
 						{
-							item = a2.childNodes.item(i);
-							if (item === ancestor)
-							{
-								return 2;
-							}
-							else if (item === a)
-							{
-								return 4;
-							}
+							return 4;
 						}
-						
-						throw new Error('Internal Error: should not get to here. 2');
 					}
-					else
-					{
-						// return result
-						return result;
-					}
+					
+					throw new Error('Internal Error: should not get to here. 3');
 				}
+				// else if b2 contains a2
+				else if ((result & 8) === 8)
+				{
+					// return "a pre b" or "b pre a" depending on b or (ancestor-or-self::a2) occurs first in b2.childNodes
+					ancestor = a2;
+					while (ancestor.parentNode !== b2)
+					{
+						ancestor = ancestor.parentNode;
+					}
+					
+					for(i=0; i<b2.childNodes.length; i++)
+					{
+						item = b2.childNodes.item(i);
+						if (item === ancestor)
+						{
+							return 4;
+						}
+						else if (item === b)
+						{
+							return 2;
+						}
+					}
+					
+					throw new Error('Internal Error: should not get to here. 3');
+				}
+				// else if a2 === b2
+				else if (result === 0)
+				{
+					// return "a pre b" or "b pre a" depending on a or b occurs first in a2.childNodes
+					for(i=0; i<a2.childNodes.length; i++)
+					{
+						item = a2.childNodes.item(i);
+						if (item === b)
+						{
+							return 2;
+						}
+						else if (item === a)
+						{
+							return 4;
+						}
+					}
+					
+					throw new Error('Internal Error: should not get to here. 4');
+				}	
+				// else
 				else
 				{
-					// if a2 contains b2
-					if ((result & 16) === 16)
-					{
-						// return "a pre b" or "b pre a" depending on a or (ancestor-or-self::b2) occurs first in a2.childNodes
-						ancestor = b2;
-						while (ancestor.parentNode !== a2)
-						{
-							ancestor = ancestor.parentNode;
-						}
-						
-						for(i=0; i<a2.childNodes.length; i++)
-						{
-							item = a2.childNodes.item(i);
-							if (item === ancestor)
-							{
-								return 2;
-							}
-							else if (item === a)
-							{
-								return 4;
-							}
-						}
-						
-						throw new Error('Internal Error: should not get to here. 3');
-					}
-					// else if b2 contains a2
-					if ((result & 8) === 8)
-					{
-						// return "a pre b" or "b pre a" depending on b or (ancestor-or-self::a2) occurs first in b2.childNodes
-						ancestor = a2;
-						while (ancestor.parentNode !== b2)
-						{
-							ancestor = ancestor.parentNode;
-						}
-						
-						for(i=0; i<b2.childNodes.length; i++)
-						{
-							item = b2.childNodes.item(i);
-							if (item === ancestor)
-							{
-								return 4;
-							}
-							else if (item === b)
-							{
-								return 2;
-							}
-						}
-						
-						throw new Error('Internal Error: should not get to here. 3');
-					}
-					// else if a2 === b2
-					else if (result === 0)
-					{
-						// return "a pre b" or "b pre a" depending on a or b occurs first in a2.childNodes
-						for(i=0; i<a2.childNodes.length; i++)
-						{
-							item = a2.childNodes.item(i);
-							if (item === b)
-							{
-								return 2;
-							}
-							else if (item === a)
-							{
-								return 4;
-							}
-						}
-						
-						throw new Error('Internal Error: should not get to here. 4');
-					}	
-					// else
-					else
-					{
-						// return result
-						return result;
-					}
+					// return result
+					return result;
 				}
 			}
 			
@@ -3972,7 +3966,7 @@ XPathJS = (function(){
 						break;
 					
 					default:
-						throw new XPathException(XPathException.TYPE_ERR, 'TODO: Implement result type: ' + type);
+						throw new XPathException(XPathException.TYPE_ERR, 'XPath result type not supported. (type: ' + type + ')');
 						break;
 				}
 				
