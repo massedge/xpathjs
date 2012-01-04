@@ -175,7 +175,9 @@ YUI().use("node", "io", "get", function (Y) {
 		
 		// load all xpath scripts for this library
 		Y.Get.script(lib.scripts, {
-			onSuccess: function () {
+			onSuccess: function (e) {
+				e.purge();
+				
 				if (lib.initFn)
 				{
 					// initialize library
