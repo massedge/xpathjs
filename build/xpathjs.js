@@ -44,6 +44,9 @@ XPathJS = (function(){
 		NumberType,
 		NodeSetType,
 		
+		// HACK: track expression currently being evaluated
+		currentExpression,
+		
 		/**
 		 * @param {Node} node
 		 * @return {Node}
@@ -394,7 +397,7 @@ XPathJS = (function(){
 		},
 		
 		/**
-		 * Return namespace nodes of given element (no namespaces of course). Empty array otherwise
+		 * Return namespace nodes of given element node. Empty array otherwise
 		 *
 		 * @param {Node} node
 		 * @param {Array} (optional) List of namespace nodes (in document order) to include
@@ -1112,10 +1115,48 @@ XPathJS = (function(){
 			}
 		},
 		
+		compareDocumentPosition = function(a, b)
+		{
+			var result, nodes, i;
+			
+			if (a.nodeType == 13 &&
+				b.nodeType == 13 &&
+				a.ownerElement == b.ownerElement
+			) {
+				// identical
+				if (a === b) return 0;
+				
+				nodes = nodeNamespace.call(currentExpression, a.ownerElement);
+				
+				for(i=0; i < nodes.length; i++)
+				{
+					if (nodes[i] === a)
+					{
+						result = 4;
+						break;
+					}
+					else if (nodes[i] === b)
+					{
+						result = 2;
+						break;
+					}
+				}
+			}
+			else
+			{
+				if (a.nodeType == 13) a = a.ownerElement;
+				if (b.nodeType == 13) b = b.ownerElement;
+				
+				result = compareDocumentPositionNoNamespace(a, b);
+			}
+			
+			return result;
+		},
+		
 		/**
 		 * @see http://ejohn.org/blog/comparing-document-position/
 		 */
-		compareDocumentPosition = function(a, b)
+		compareDocumentPositionNoNamespace = function(a, b)
 		{
 			var a2,
 				b2,
@@ -1949,6 +1990,9 @@ XPathJS = (function(){
 		evaluate: function(contextNode, type, result)
 		{
 			var context;
+			
+			// HACK: track current expression being evaluated
+			currentExpression = this;
 			
 			// check if our implementation supports this node type
 			nodeSupported(contextNode);

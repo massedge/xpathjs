@@ -331,6 +331,14 @@ if ($serve_xml)
 				</div>
 			</div>
 			<div id="eee50"></div>
+			
+			<div id="nss10">
+				<div id="nss20">
+					<div id="nss25" xmlns:asdf="http://asdf.com/" align="right"></div>
+					<div xmlns:asdf="http://asdf.com/" id="nss30"></div>
+				</div>
+				<div id="nss40" xmlns:asdf="sss" xmlns:asdf2="sdfsdf"></div>
+			</div>
 		</div>
 	</body>
 </html>

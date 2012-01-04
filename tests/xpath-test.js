@@ -413,6 +413,27 @@ YUI().use("node", "console", "test", function (Y) {
 		return specifiedAttributes;
 	},
 	
+	filterSpecifiedAttributes = function(attributes)
+	{
+		var specifiedAttributes = [],
+			i,
+			name
+		;
+		
+		for(i=0; i < attributes.length; i++)
+		{
+			if (!attributes[i].specified)
+			{
+				// ignore non-specified attributes
+				continue;
+			}
+			
+			specifiedAttributes.push(attributes[i]);
+		}
+		
+		return specifiedAttributes;
+	}
+	
 	checkNodeResultNamespace = function(expression, contextNode, expectedResult, resolver)
 	{
 		var j, result, item, res;
@@ -469,6 +490,17 @@ YUI().use("node", "console", "test", function (Y) {
 				}
 			}
 		}
+	},
+	
+	snapshotToArray = function(result) {
+		var nodes = [], i;
+		
+		for (i=0; i < result.snapshotLength; i++)
+		{
+			nodes.push(result.snapshotItem(i));
+		}
+		
+		return nodes;
 	}
 	;
 	
@@ -4411,6 +4443,39 @@ YUI().use("node", "console", "test", function (Y) {
 				filterAttributes(document.getElementById('eee40').attributes)[0],
 				filterAttributes(document.getElementById('eee40').attributes)[1]
 			]);
+		},
+		
+		testNamespaceAttributeSameElement: function()
+		{
+			var result = documentEvaluate("id('nss25')/namespace::*", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+			
+			checkNodeResult("id('nss25')/namespace::* | id('nss25')/attribute::*", document,
+				snapshotToArray(result).concat(
+					filterAttributes(document.getElementById('nss25').attributes)
+				)
+			);
+		},
+		
+		testNamespaceNamespaceSameElement: function()
+		{
+			var result = documentEvaluate("id('nss40')/namespace::*", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+			
+			checkNodeResult("id('nss40')/namespace::* | id('nss40')/namespace::*", document,
+				snapshotToArray(result)
+			);
+		},
+		
+		testNamespaceAttributeElement: function()
+		{
+			var result = documentEvaluate("id('nss40')/namespace::*", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+			
+			checkNodeResult("id('nss40')/namespace::* | id('nss25')/attribute::* | id('nss25')", document, [
+				document.getElementById('nss25')].concat(
+					filterAttributes(document.getElementById('nss25').attributes)
+				).concat(
+					snapshotToArray(result)
+				)
+			);
 		}
 	});
 	
