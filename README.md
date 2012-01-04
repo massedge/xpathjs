@@ -23,24 +23,28 @@ Getting Started
   
   3. Initialize XPathJS:
      
-         // bind XPath methods to document and window objects
-         // NOTE: This will overwrite native XPath implementation if it exists
-         XPathJS.bindDomLevel3XPath();
+     ```javascript
+    // bind XPath methods to document and window objects
+    // NOTE: This will overwrite native XPath implementation if it exists
+    XPathJS.bindDomLevel3XPath();
+    ```
      
   4. You can now use XPath expressions to query the DOM:
      
-        var result = document.evaluate(
-            '//ul/li/text()', // XPath expression
-            document, // context node
-            null, // namespace resolver
-            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
-        );
-        
-        // loop through results
-        for (var i = 0; i < result.snapshotLength; i++) {
-            var node = result.snapshotItem(i);
-            alert(node.nodeValue);
-        }
+     ```javascript
+    var result = document.evaluate(
+        '//ul/li/text()', // XPath expression
+        document, // context node
+        null, // namespace resolver
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
+    );
+    
+    // loop through results
+    for (var i = 0; i < result.snapshotLength; i++) {
+        var node = result.snapshotItem(i);
+        alert(node.nodeValue);
+    }
+    ```
 
 Take a look at some [working examples](http://www.pokret.org/xpathjs/examples/) to get a better idea of how to use XPathJS.
 
@@ -90,10 +94,12 @@ In order to build the code yourself, you will need the following tools:
 
 Once the tools are installed, do the following:
 
-    git clone https://github.com/andrejpavlovic/xpathjs.git
-    cd xpathjs
-    git submodule init
-    git submodule update
-    ant build
+```bash
+git clone https://github.com/andrejpavlovic/xpathjs.git
+cd xpathjs
+git submodule init
+git submodule update
+ant build
+```
 
 NOTE: Currently the build script only works in Windows, but it can be easily adjusted to work in Linux. Take a look at [build.xml](https://github.com/andrejpavlovic/xpathjs/blob/master/build.xml) file.
