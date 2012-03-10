@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>XPathJS Example: Simple (with no namespaces)</title>
+	<title>XPathJS Example: Simple (with a default namespace)</title>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css" />
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css" />
@@ -18,10 +18,24 @@
 		// run example
 		function run()
 		{
+			// custom namespace resolver
+			var myNamespaceResolver = {
+				lookupNamespaceURI: function(prefix) {
+					switch(prefix) {
+						// resolve "x" prefix
+						case 'x':
+							return 'http://www.w3.org/1999/xhtml';
+						
+						default:
+							return null;
+					}
+				}
+			}
+
 			var result = document.evaluate(
-				'//ul/li/text()', // XPath expression
+				'//x:ul/x:li/text()', // XPath expression
 				document, // context node
-				null, // namespace resolver
+				myNamespaceResolver, // namespace resolver
 				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
 			);
 			
@@ -36,7 +50,7 @@
 
 <body class="yui3-skin-sam">
 
-	<h1>XPathJS Example: Simple (with no namespaces)</h1>
+	<h1>XPathJS Example: Simple (with a default namespace)</h1>
 
 	<ul>
 		<li>Red</li>

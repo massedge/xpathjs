@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>XPathJS Example: Simple (with no namespaces)</title>
+	<title>XPathJS Example: Simple (without appending to global space)</title>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css" />
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css" />
@@ -11,18 +11,17 @@
 	<script type="text/javascript" src="../build/xpathjs.js"></script>
 	
 	<script type="text/javascript">
-		// bind XPath methods to document and window objects
-		// NOTE: This will overwrite native XPath implementation if it exists
-		XPathJS.bindDomLevel3XPath();
+		// create XPath methods without attaching them to global window or document variables
+		var bindings = XPathJS.createDomLevel3XPathBindings();
 		
 		// run example
 		function run()
 		{
-			var result = document.evaluate(
+			var result = bindings.document.evaluate(
 				'//ul/li/text()', // XPath expression
 				document, // context node
 				null, // namespace resolver
-				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
+				bindings.window.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
 			);
 			
 			// loop through results
@@ -36,7 +35,7 @@
 
 <body class="yui3-skin-sam">
 
-	<h1>XPathJS Example: Simple (with no namespaces)</h1>
+	<h1>XPathJS Example: Simple (without appending to global space)</h1>
 
 	<ul>
 		<li>Red</li>

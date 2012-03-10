@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://www.pokret.org/namespace/">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>XPathJS Example: Simple (with no namespaces)</title>
+	<title>XPathJS Example: Simple (with multiple namespaces)</title>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css" />
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css" />
@@ -18,10 +18,33 @@
 		// run example
 		function run()
 		{
+			// custom namespace resolver
+			var myNamespaceResolver = {
+				lookupNamespaceURI: function(prefix) {
+					switch(prefix) {
+						// resolve "x" prefix
+						case 'x':
+							return 'http://www.w3.org/1999/xhtml';
+						
+						// resolve "z" prefix
+						// NOTE: instead of the "p" prefix declared in the document
+						// we are using "z" prefix in the xpath expressiong below.
+						// What's important is that "z" in the xpath expression
+						// resolves to "p" in the document in order to successfully
+						// match the nodes.
+						case 'z':
+							return 'http://www.pokret.org/namespace/';
+
+						default:
+							return null;
+					}
+				}
+			}
+
 			var result = document.evaluate(
-				'//ul/li/text()', // XPath expression
+				'//x:ul/z:li/text()', // XPath expression
 				document, // context node
-				null, // namespace resolver
+				myNamespaceResolver, // namespace resolver
 				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
 			);
 			
@@ -36,12 +59,12 @@
 
 <body class="yui3-skin-sam">
 
-	<h1>XPathJS Example: Simple (with no namespaces)</h1>
+	<h1>XPathJS Example: Simple (with multiple namespaces)</h1>
 
 	<ul>
-		<li>Red</li>
-		<li>Blue</li>
-		<li>Green</li>
+		<p:li>Red</p:li>
+		<p:li>Blue</p:li>
+		<p:li>Green</p:li>
 	</ul>
 	
 	<input type="button" value="Get a list of all bullet text nodes" onclick="run();" />

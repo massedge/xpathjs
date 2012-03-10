@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>XPathJS Example: Simple (with no namespaces)</title>
+	<title>XPathJS Example: Custom namespace resolver via node (createNSResolver)</title>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css" />
 	<link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css" />
@@ -19,9 +19,15 @@
 		function run()
 		{
 			var result = document.evaluate(
-				'//ul/li/text()', // XPath expression
+				// NOTE: You may be tempted to use '//ul/li/text()' instead, but you have to remember, any
+				// non-prefixed node in an XPath expression, will not belong to any namespace. Even if
+				// you create a custom resolver or use document.createNSResolver on a particular node, these
+				// resolvers will never be able to resolve an empty prefix to an actual namespace.
+				// CONCLUSION: If a node belongs to a namespace and you want to select it, you MUST ALWAYS use a prefix.
+				'//x:ul/x:li/text()', // XPath expression
+
 				document, // context node
-				null, // namespace resolver
+				document.createNSResolver(document.documentElement), // namespace resolver
 				XPathResult.ORDERED_NODE_SNAPSHOT_TYPE // result type to return
 			);
 			
@@ -36,7 +42,7 @@
 
 <body class="yui3-skin-sam">
 
-	<h1>XPathJS Example: Simple (with no namespaces)</h1>
+	<h1>XPathJS Example: Custom namespace resolver via node (createNSResolver)</h1>
 
 	<ul>
 		<li>Red</li>

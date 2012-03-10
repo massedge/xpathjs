@@ -1,20 +1,40 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>XPathJS Examples</title>
 	
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssbase/cssbase.css" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset.css" type="text/css" />
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssfonts/cssfonts.css" type="text/css" />
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.4.1/build/cssbase/cssbase.css" type="text/css" />
 </head>
 
 <body class="yui3-skin-sam">
 	<h1>XPathJS Examples</h1>
 	
 	<dl>
-		<dt><strong><a href="example-simple.html">Simple</a></strong></dt>
+		<dt><strong><a href="example-simple.html">Simple (with no namespaces)</a></strong></dt>
 		<dd>Shows basic initialization and usage of XPathJS.</dd>
+	</dl>
+	
+	<dl>
+		<dt><strong><a href="example-default-namespace.html">Simple (with a default namespace)</a></strong></dt>
+		<dd>Shows usage of XPathJS with a default namespace.</dd>
+	</dl>
+	
+	<dl>
+		<dt><strong><a href="example-multiple-namespaces.html">Simple (with multiple namespaces)</a></strong></dt>
+		<dd>Shows usage of XPathJS with multiple namespaces.</dd>
+	</dl>
+	
+	<dl>
+		<dt><strong><a href="example-no-global-binding.html">Simple (without appending to global space)</a></strong></dt>
+		<dd>Shows initialization and usage of XPathJS without binding XPathJS function to global variables.</dd>
+	</dl>
+	
+	<dl>
+		<dt><strong><a href="example-resolver-node.html">Custom namespace resolver via node (createNSResolver)</a></strong></dt>
+		<dd>Using built-in document.createNSResolver for generating a namespace resolver based on a specific node.</dd>
 	</dl>
 	
 	<p>More examples coming...</p>
