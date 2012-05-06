@@ -16,7 +16,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-YUI().use("node", "console", "test", function (Y) {
+YUI().use("node", "test-console", "test", function (Y) {
 	Y.namespace("xpathjs.test");
 	
 	var helpers = {
@@ -4499,12 +4499,15 @@ YUI().use("node", "console", "test", function (Y) {
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.UnionOperatorTestCase);
 	
 	//create the console
-	var r = new Y.Console({
+	var r = new Y.Test.Console({
 		newestOnTop : false,
 		style: 'inline', // to anchor in the example content
 		height: '800px',
 		width: '100%',
-		consoleLimit: 1000
+		consoleLimit: 1000,
+		filters: {
+			pass: true
+		}
 	});
 	
 	/**
