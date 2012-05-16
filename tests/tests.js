@@ -16,7 +16,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-YUI().use("node", "test-console", "test", function (Y) {
+YUI.add('xpathjs-test', function (Y) {
 	Y.namespace("xpathjs.test");
 	
 	var helpers = {
@@ -4497,28 +4497,6 @@ YUI().use("node", "test-console", "test", function (Y) {
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.LocationPathCase);
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.ComparisonOperatorCase);
 	Y.xpathjs.test.DomXPathSuite.add(Y.xpathjs.test.UnionOperatorTestCase);
-	
-	//create the console
-	var r = new Y.Test.Console({
-		newestOnTop : false,
-		style: 'inline', // to anchor in the example content
-		height: '800px',
-		width: '100%',
-		consoleLimit: 1000,
-		filters: {
-			pass: true
-		}
-	});
-	
-	/**
-	 * @see http://yuilibrary.com/projects/yui3/ticket/2531085
-	 */
-	Y.Console.FOOTER_TEMPLATE = Y.Console.FOOTER_TEMPLATE.replace('id="{id_guid}">', 'id="{id_guid}" />');
-
-	r.render('#testLogger');
-
-	Y.Test.Runner.add(Y.xpathjs.test.DomXPathSuite);
-
-	//run the tests
-	Y.Test.Runner.run();
+}, '0.0.1', {
+	requires: ["node", "test"]
 });
