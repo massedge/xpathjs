@@ -83,6 +83,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 			);
 			
 			lib.testSuite = Y.XPathJS.Test.generateTestSuite(
+				lib.iframe.contentWindow,
 				lib.iframe.contentWindow.document,
 				function(expression, contextNode, resolver, type, result) {
 					return lib.evaluate(lib.iframe.contentWindow, expression, contextNode, resolver, type, result);
@@ -130,13 +131,14 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 				
 				rows.item(currentRow).append(
 					Y.Node.create('<td></td>')
+						.addClass('status')
+						.addClass('status-' + data.type)
 						.append(
 							Y.one(document.createTextNode(data.type))
 						)
 				);
 				
 				currentRow++;
-				//console.log(data);
 			},
 			handleTestComplete = function() {
 				// reset test runner

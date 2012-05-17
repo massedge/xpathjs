@@ -37,7 +37,7 @@ YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
 
 	r.render('#testLogger');
 
-	Y.Test.Runner.add(Y.XPathJS.Test.generateTestSuite(document, document.evaluate));
+	Y.Test.Runner.add(Y.XPathJS.Test.generateTestSuite(window, document, document.evaluate));
 
 	//run the tests
 	Y.Test.Runner.run();

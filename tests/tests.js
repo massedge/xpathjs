@@ -20,7 +20,7 @@ YUI.add('xpathjs-test', function (Y) {
 	
 	Y.namespace("XPathJS.Test");
 	
-	Y.XPathJS.Test.generateTestSuite = function(doc, docEvaluate)
+	Y.XPathJS.Test.generateTestSuite = function(win, doc, docEvaluate)
 	{
 		var tests = {},
 			helpers = {
@@ -441,7 +441,7 @@ YUI.add('xpathjs-test', function (Y) {
 			}
 			
 			return specifiedAttributes;
-		}
+		},
 		
 		checkNodeResultNamespace = function(expression, contextNode, expectedResult, resolver)
 		{
@@ -1710,8 +1710,8 @@ YUI.add('xpathjs-test', function (Y) {
 				var resolver = documentCreateNSResolver(node);
 				
 				// check type
-				Y.Assert.isInstanceOf(XPathNSResolver, resolver);
-				Y.Assert.isInstanceOf(Function, resolver.lookupNamespaceURI);
+				Y.Assert.isInstanceOf(win.XPathNSResolver, resolver);
+				Y.Assert.areSame("function", typeof resolver.lookupNamespaceURI);
 				
 				// check preconfigured namespaces
 				Y.Assert.areSame('http://www.w3.org/XML/1998/namespace', resolver.lookupNamespaceURI('xml'));
@@ -1729,8 +1729,8 @@ YUI.add('xpathjs-test', function (Y) {
 			,testLookupNamespaceURIDocument : function() {
 				var resolver = documentCreateNSResolver(doc);
 				
-				Y.Assert.isInstanceOf(XPathNSResolver, resolver);
-				Y.Assert.isInstanceOf(Function, resolver.lookupNamespaceURI);
+				Y.Assert.isInstanceOf(win.XPathNSResolver, resolver);
+				Y.Assert.areSame("function", typeof resolver.lookupNamespaceURI);
 				
 				Y.Assert.areSame('http://some-namespace.com/nss', resolver.lookupNamespaceURI('ev'));
 			}
@@ -1739,8 +1739,8 @@ YUI.add('xpathjs-test', function (Y) {
 				var node = doc.documentElement;
 				var resolver = documentCreateNSResolver(node);
 				
-				Y.Assert.isInstanceOf(XPathNSResolver, resolver);
-				Y.Assert.isInstanceOf(Function, resolver.lookupNamespaceURI);
+				Y.Assert.isInstanceOf(win.XPathNSResolver, resolver);
+				Y.Assert.areSame("function", typeof resolver.lookupNamespaceURI);
 				
 				Y.Assert.areSame('http://some-namespace.com/nss', resolver.lookupNamespaceURI('ev'));
 				Y.Assert.areSame('http://www.w3.org/1999/xhtml', resolver.lookupNamespaceURI(''));
@@ -1852,7 +1852,7 @@ YUI.add('xpathjs-test', function (Y) {
 				var resolver = documentCreateNSResolver(doc.documentElement);
 				var expression  = documentCreateExpression('1', resolver);
 				
-				Y.Assert.isInstanceOf(XPathExpression, expression);
+				Y.Assert.isInstanceOf(win.XPathExpression, expression);
 			},
 			
 			testParsingInvalidExpressionException : function() {
