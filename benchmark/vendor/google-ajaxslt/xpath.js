@@ -895,7 +895,7 @@ StepExpr.prototype.evaluate = function(ctx) {
     }
 
   } else if (this.axis == xpathAxis.NAMESPACE) {
-    alert('not implemented: axis namespace');
+    throw 'not implemented: axis namespace';
 
   } else if (this.axis == xpathAxis.PARENT) {
     if (input.parentNode) {
@@ -1097,11 +1097,11 @@ FunctionCallExpr.prototype.xpathfunctions = {
   },
 
   'local-name': function(ctx) {
-    alert('not implmented yet: XPath function local-name()');
+    throw 'not implmented yet: XPath function local-name()';
   },
 
   'namespace-uri': function(ctx) {
-    alert('not implmented yet: XPath function namespace-uri()');
+    throw 'not implmented yet: XPath function namespace-uri()';
   },
 
   'name': function(ctx) {
@@ -1546,7 +1546,7 @@ BinaryExpr.prototype.evaluate = function(ctx) {
       break;
 
     default:
-      alert('BinaryExpr.evaluate: ' + this.op.value);
+      throw 'BinaryExpr.evaluate: ' + this.op.value;
   }
   return ret;
 };
