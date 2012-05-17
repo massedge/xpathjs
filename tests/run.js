@@ -18,27 +18,100 @@
 
 YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
 	
-	//create the console
-	var r = new Y.Test.Console({
-		newestOnTop : false,
-		style: 'inline', // to anchor in the example content
-		height: '800px',
-		width: '100%',
-		consoleLimit: 1000,
-		filters: {
-			pass: true
-		}
-	});
+	Y.on("domready", init); 
 	
-	/**
-	 * @see http://yuilibrary.com/projects/yui3/ticket/2531085
-	 */
-	Y.Console.FOOTER_TEMPLATE = Y.Console.FOOTER_TEMPLATE.replace('id="{id_guid}">', 'id="{id_guid}" />');
-
-	r.render('#testLogger');
-
-	Y.Test.Runner.add(Y.XPathJS.Test.generateTestSuite(window, document, document.evaluate));
-
-	//run the tests
-	Y.Test.Runner.run();
+	function init()
+	{
+		var useNative = !!getParameterFromUrl(location.href, "native"),
+			useXml = !!getParameterFromUrl(location.href, "xml"),
+			testUrl = "tests.php?native=" + ((useNative) ? 1 : 0) + "&xml=" + ((useXml) ? 1 : 0)
+		;
+		
+		// highlight current settings
+		Y.one(".setting" + ((useNative) ? 1 : 0) + ((useXml) ? 1 : 0))
+			.addClass("setting-current")
+		;
+		
+		var iframe = Y.one(document.createElement('iframe'))
+				.setStyle('display', 'none')
+				.appendTo(Y.one("#testContainer")),
+			iframeLoaded = function() {
+				attachScripts(iframe._node.contentWindow, useNative, useXml);
+			}
+		;
+		
+		// @see http://www.nczonline.net/blog/2009/09/15/iframes-onload-and-documentdomain/
+		if (iframe._node.attachEvent) {
+			iframe._node.attachEvent("onload", iframeLoaded);
+		} else {
+			iframe.set('onload', iframeLoaded);
+		}
+		
+		iframe.set('src', testUrl);
+	}
+	
+	function attachScripts(win, useNative, useXml) {
+		var scripts = [
+			"../benchmark/js/dummy.js"
+		];
+		
+		if (!useNative) {
+			scripts.push("../src/engine.js");
+			scripts.push("../build/parser.js");
+		}
+		
+		// load all xpath scripts for this library
+		Y.Get.script(scripts, {
+			attributes: {
+				type: "text/javascript"
+			},
+			onSuccess: function (e) {
+				// remove script tags
+				e.purge();
+				
+				if (!useNative) {
+					// initialize xpathjs
+					win.XPathJS.bindDomLevel3XPath(
+						win.XPathJS.createDomLevel3XPathBindings({
+							'case-sensitive': (useXml) ? true : false
+						})
+					);
+				}
+				
+				runTests(win);
+			},
+			win: win
+		});
+	}
+	
+	function runTests(win) {
+		//create the console
+		var r = new Y.Test.Console({
+			newestOnTop : false,
+			style: 'inline', // to anchor in the example content
+			height: '500px',
+			width: '100%',
+			consoleLimit: 1000,
+			filters: {
+				pass: true
+			}
+		});
+		
+		/**
+		 * @see http://yuilibrary.com/projects/yui3/ticket/2531085
+		 */
+		Y.Console.FOOTER_TEMPLATE = Y.Console.FOOTER_TEMPLATE.replace('id="{id_guid}">', 'id="{id_guid}" />');
+	
+		r.render('#testLogger');
+	
+		Y.Test.Runner.add(Y.XPathJS.Test.generateTestSuite(win, win.document, win.document.evaluate));
+	
+		//run the tests
+		Y.Test.Runner.run();
+	}
+	
+	function getParameterFromUrl(url, param) {
+		var regexp = new RegExp("(?:\\?|&)" + param + "(?:$|&|=)([^&#]*)");
+		return parseInt(regexp.exec(url)[1]);
+	}
 });
