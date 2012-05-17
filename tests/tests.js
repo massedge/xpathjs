@@ -449,7 +449,7 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			res = (!resolver) ? null : resolver;
 			
-			result = documentEvaluate(expression, contextNode, res, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+			result = documentEvaluate(expression, contextNode, res, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 			Y.Assert.areSame(expectedResult.length, result.snapshotLength);
 			
@@ -467,7 +467,7 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			res = (!resolver) ? null : resolver;
 			
-			result = documentEvaluate(expression, contextNode, res, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+			result = documentEvaluate(expression, contextNode, res, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 			
 			Y.Assert.areSame(expectedResult.length, result.snapshotLength);
 			
@@ -562,7 +562,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue);
 				}
 			},
@@ -588,7 +588,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue);
 				}
 			},
@@ -603,7 +603,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue);
 				}
 			},
@@ -643,18 +643,18 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.stringValue);
 				}
 			},
 			
 			testStringNodesetNamespace: function() {
-				var result = documentEvaluate("string(namespace::node())", doc.getElementById('FunctionStringCaseStringNodesetNamespace'), null, XPathResult.STRING_TYPE, null);
+				var result = documentEvaluate("string(namespace::node())", doc.getElementById('FunctionStringCaseStringNodesetNamespace'), null, win.XPathResult.STRING_TYPE, null);
 				Y.Assert.areSame("http://www.w3.org/1999/xhtml", result.stringValue);
 			},
 			
 			testStringExceptionTooManyArgs: function() {
-				documentEvaluate("string(1, 2)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("string(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testConcat: function() {
@@ -669,17 +669,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testConcatExceptionNotEnoughArgs1: function() {
-				documentEvaluate("concat()", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("concat()", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testConcatExceptionNotEnoughArgs2: function() {
-				documentEvaluate("concat(1)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("concat(1)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testStartsWith: function() {
@@ -696,21 +696,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testStartsWithTooManyArgs: function() {
-				documentEvaluate("starts-with(1, 2, 3)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("starts-with(1, 2, 3)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testStartsWithNotEnoughArgs1: function() {
-				documentEvaluate("starts-with()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("starts-with()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testStartsWithNotEnoughArgs2: function() {
-				documentEvaluate("starts-with(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("starts-with(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testContains: function() {
@@ -727,21 +727,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testContainsWithTooManyArgs: function() {
-				documentEvaluate("contains(1, 2, 3)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("contains(1, 2, 3)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testContainsWithNotEnoughArgs1: function() {
-				documentEvaluate("contains()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("contains()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testContainsWithNotEnoughArgs2: function() {
-				documentEvaluate("contains(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("contains(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringBefore: function() {
@@ -760,21 +760,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testSubstringBeforeWithTooManyArgs: function() {
-				documentEvaluate("substring-before(1, 2, 3)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-before(1, 2, 3)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringBeforeWithNotEnoughArgs1: function() {
-				documentEvaluate("substring-before()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-before()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringBeforeWithNotEnoughArgs2: function() {
-				documentEvaluate("substring-before(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-before(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringAfter: function() {
@@ -793,21 +793,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testSubstringAfterWithTooManyArgs: function() {
-				documentEvaluate("substring-after(1, 2, 3)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-after(1, 2, 3)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringAfterWithNotEnoughArgs1: function() {
-				documentEvaluate("substring-after()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-after()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringAfterWithNotEnoughArgs2: function() {
-				documentEvaluate("substring-after(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring-after(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstring: function() {
@@ -832,21 +832,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testSubstringWithTooManyArgs: function() {
-				documentEvaluate("substring(1, 2, 3, 4)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring(1, 2, 3, 4)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringWithNotEnoughArgs1: function() {
-				documentEvaluate("substring()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSubstringWithNotEnoughArgs2: function() {
-				documentEvaluate("substring(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("substring(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testStringLength: function() {
@@ -863,13 +863,13 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][2], null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][2], null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testStringLengthWithTooManyArgs: function() {
-				documentEvaluate("string-length(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("string-length(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testNormalizeSpace: function() {
@@ -893,13 +893,13 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][2], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][2], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testNormalizeSpaceExceptionTooManyArgs: function() {
-				documentEvaluate("normalize-space(1,2)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("normalize-space(1,2)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testTranslate: function() {
@@ -918,25 +918,25 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testTranslateExceptionTooManyArgs: function() {
-				documentEvaluate("translate(1, 2, 3, 4)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("translate(1, 2, 3, 4)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testTranslateExceptionNotEnoughArgs1: function() {
-				documentEvaluate("translate()", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("translate()", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testTranslateExceptionNotEnoughArgs2: function() {
-				documentEvaluate("translate(1)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("translate(1)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			},
 			
 			testTranslateExceptionNotEnoughArgs3: function() {
-				documentEvaluate("translate(1,2)", doc, helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+				documentEvaluate("translate(1,2)", doc, helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 			}
 		});
 		
@@ -963,38 +963,38 @@ YUI.add('xpathjs-test', function (Y) {
 			testNumberNumber: function() {
 				var result;
 				
-				result = documentEvaluate("number(-1.0)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(-1.0)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(-1, result.numberValue);
 				
-				result = documentEvaluate("number(1)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(1)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 				
-				result = documentEvaluate("number(0.199999)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(0.199999)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0.199999, result.numberValue);
 				
-				result = documentEvaluate("number(-0.9991)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(-0.9991)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(-0.9991, result.numberValue);
 				
-				result = documentEvaluate("number(- 0.9991)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(- 0.9991)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(-0.9991, result.numberValue);
 				
-				result = documentEvaluate("number(0.0)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(0.0)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 				
-				result = documentEvaluate("number(.0)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(.0)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 				
-				result = documentEvaluate("number(0.)", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(0.)", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testNumberBoolean: function() {
 				var result;
 				
-				result = documentEvaluate("number(true())", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(true())", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 				
-				result = documentEvaluate("number(false())", doc, null, XPathResult.NUMBER_TYPE, null);
+				result = documentEvaluate("number(false())", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
@@ -1018,7 +1018,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -1032,7 +1032,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
@@ -1049,7 +1049,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.numberValue);
 				}
 				
@@ -1059,14 +1059,14 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
 			},
 			
 			testNumberExceptionTooManyArgs: function() {
-				documentEvaluate("number(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("number(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSum: function() {
@@ -1079,7 +1079,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.numberValue);
 				}
 				
@@ -1089,18 +1089,18 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
 			},
 			
 			testSumExceptionTooManyArgs: function() {
-				documentEvaluate("sum(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("sum(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testSumExceptionNotEnoughArgs: function() {
-				documentEvaluate("sum()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("sum()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testFloor: function() {
@@ -1118,17 +1118,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			},
 			
 			testFloorExceptionTooManyArgs: function() {
-				documentEvaluate("floor(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("floor(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testFloorExceptionNotEnoughArgs: function() {
-				documentEvaluate("floor()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("floor()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testCeiling: function() {
@@ -1146,17 +1146,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			},
 			
 			testCeilingExceptionTooManyArgs: function() {
-				documentEvaluate("ceiling(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("ceiling(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testCeilingExceptionNotEnoughArgs: function() {
-				documentEvaluate("ceiling()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("ceiling()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testRound: function() {
@@ -1174,17 +1174,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			},
 			
 			testRoundExceptionTooManyArgs: function() {
-				documentEvaluate("round(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("round(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testRoundExceptionNotEnoughArgs: function() {
-				documentEvaluate("round()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("round()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			}
 		});
 		
@@ -1210,107 +1210,107 @@ YUI.add('xpathjs-test', function (Y) {
 			testTrue: function() {
 				var result;
 				
-				result = documentEvaluate("true()", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("true()", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testTrueExceptionTooManyArgs: function() {
-				documentEvaluate("true(1)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("true(1)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testFalse: function() {
 				var result;
 				
-				result = documentEvaluate("false()", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("false()", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testFalseExceptionTooManyArgs: function() {
-				documentEvaluate("false('a')", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("false('a')", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testBooleanString: function() {
 				var result;
 				
-				result = documentEvaluate("boolean('a')", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean('a')", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean('')", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean('')", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testBooleanBoolean: function() {
 				var result;
 				
-				result = documentEvaluate("boolean(true())", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(true())", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(false())", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(false())", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testBooleanNumber: function() {
 				var result;
 				
-				result = documentEvaluate("boolean(1)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(1)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(-1)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(-1)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(1 div 0)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(1 div 0)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(0.1)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(0.1)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(0)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(0)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 				
-				result = documentEvaluate("boolean(0.0)", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(0.0)", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 				
-				result = documentEvaluate("boolean(number(''))", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(number(''))", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testBooleanNodeset: function() {
 				var result;
 				
-				result = documentEvaluate("boolean(/xhtml:html)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(/xhtml:html)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("boolean(/asdf)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("boolean(/asdf)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testBooleanExceptionNotEnoughArgs: function() {
-				documentEvaluate("boolean()", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("boolean()", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testBooleanExceptionTooManyArgs: function() {
-				documentEvaluate("boolean(1, 2)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("boolean(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testNot: function() {
 				var result;
 				
-				result = documentEvaluate("not(true())", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("not(true())", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 				
-				result = documentEvaluate("not(false())", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("not(false())", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 				
-				result = documentEvaluate("not(1)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				result = documentEvaluate("not(1)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(false, result.booleanValue);
 			},
 			
 			testNotExceptionNotEnoughArgs: function() {
-				documentEvaluate("not()", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("not()", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testNotExceptionTooManyArgs: function() {
-				documentEvaluate("not(1, 2)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("not(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testLang: function() {
@@ -1337,17 +1337,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.booleanValue, "Values should be the same. " + input[i][0]);
 				}
 			},
 			
 			testLangExceptionNotEnoughArgs: function() {
-				documentEvaluate("lang()", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("lang()", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			},
 			
 			testLangExceptionTooManyArgs: function() {
-				documentEvaluate("lang(1, 2)", doc, helpers.xhtmlResolver, XPathResult.BOOLEAN_TYPE, null);
+				documentEvaluate("lang(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.BOOLEAN_TYPE, null);
 			}
 		});
 		
@@ -1384,13 +1384,13 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			},
 			
 			testLastExceptionTooManyArgs: function() {
-				documentEvaluate("last(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("last(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testPosition: function() {
@@ -1405,7 +1405,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -1415,13 +1415,13 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.stringValue);
 				}
 			},
 			
 			testPositionExceptionTooManyArgs: function() {
-				documentEvaluate("position(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("position(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testCount: function() {
@@ -1434,21 +1434,21 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc.getElementById('testFunctionNodeset2'), helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			},
 			
 			testCountExceptionTooManyArgs: function() {
-				documentEvaluate("count(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("count(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testCountExceptionNotEnoughArgs: function() {
-				documentEvaluate("count()", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("count()", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testCountExceptionWrongArgType: function() {
-				documentEvaluate("count(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("count(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testLocalName: function() {
@@ -1499,7 +1499,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.stringValue.toLowerCase(), 'Values should be the same. (' + i + ') ' + input[i][0]);
 				}
 			},
@@ -1517,17 +1517,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.stringValue.toLowerCase(), 'Values should be the same. (' + i + ') ' + input[i][0]);
 				}
 			},
 			
 			testLocalNameExceptionTooManyArgs: function() {
-				documentEvaluate("local-name(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("local-name(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testLocalNameExceptionWrongArgType: function() {
-				documentEvaluate("local-name(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("local-name(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testNamespaceUri: function() {
@@ -1580,17 +1580,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.stringValue, 'Values should be the same. (' + i + ') ' + input[i][0]);
 				}
 			},
 			
 			testNamespaceUriExceptionTooManyArgs: function() {
-				documentEvaluate("namespace-uri(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("namespace-uri(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testNamespaceUriExceptionWrongArgType: function() {
-				documentEvaluate("namespace-uri(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("namespace-uri(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testName: function() {
@@ -1643,17 +1643,17 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.STRING_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.STRING_TYPE, null);
 					Y.Assert.areSame(input[i][2], result.stringValue, 'Values should be the same. (' + i + ') ' + input[i][0]);
 				}
 			},
 			
 			testNameExceptionTooManyArgs: function() {
-				documentEvaluate("name(1, 2)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("name(1, 2)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testNameExceptionWrongArgType: function() {
-				documentEvaluate("name(1)", doc, helpers.xhtmlResolver, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("name(1)", doc, helpers.xhtmlResolver, win.XPathResult.NUMBER_TYPE, null);
 			}
 		});
 		
@@ -1668,16 +1668,16 @@ YUI.add('xpathjs-test', function (Y) {
 			},
 			
 			testConstants : function() {
-				Y.Assert.areSame(51, XPathException.INVALID_EXPRESSION_ERR);
-				Y.Assert.areSame(52, XPathException.TYPE_ERR);
+				Y.Assert.areSame(51, win.XPathException.INVALID_EXPRESSION_ERR);
+				Y.Assert.areSame(52, win.XPathException.TYPE_ERR);
 			},
 			
 			testConstructor : function() {
 				var message = 'here is the message';
-				var ex = new XPathException(XPathException.INVALID_EXPRESSION_ERR, message);
+				var ex = new win.XPathException(win.XPathException.INVALID_EXPRESSION_ERR, message);
 				
 				// check code
-				Y.Assert.areSame(XPathException.INVALID_EXPRESSION_ERR, ex.code);
+				Y.Assert.areSame(win.XPathException.INVALID_EXPRESSION_ERR, ex.code);
 				Y.Assert.areSame(51, ex.code);
 				
 				// check message
@@ -1692,12 +1692,12 @@ YUI.add('xpathjs-test', function (Y) {
 			},
 			
 			testConstructorWithoutMessage : function() {
-				var ex = new XPathException(XPathException.INVALID_EXPRESSION_ERR);
+				var ex = new win.XPathException(win.XPathException.INVALID_EXPRESSION_ERR);
 				Y.Assert.areSame("", ex.message);
 			},
 			
 			testConstructorException : function() {
-				new XPathException(99, 'message goes here');
+				new win.XPathException(99, 'message goes here');
 			}
 		});
 		
@@ -1865,7 +1865,7 @@ YUI.add('xpathjs-test', function (Y) {
 					if (ex.name === "Assert Error") // YUI3 exception
 						throw ex;
 					
-					Y.Assert.areSame(XPathException.INVALID_EXPRESSION_ERR, ex.code);
+					Y.Assert.areSame(win.XPathException.INVALID_EXPRESSION_ERR, ex.code);
 					Y.Assert.areSame(51, ex.code);
 				}
 			},
@@ -1931,7 +1931,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -1942,46 +1942,46 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
 			},
 			
 			testMinusSpacing1: function() {
-				var result = documentEvaluate("1-1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1-1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testMinusSpacing2: function() {
-				var result = documentEvaluate("1 - 1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1 - 1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testMinusSpacing3: function() {
-				var result = documentEvaluate("1 -1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1 -1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testMinusSpacing4: function() {
-				var result = documentEvaluate("1- 1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1- 1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testMinusSpacing5: function() {
-				var result = documentEvaluate("asdf- asdf", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("asdf- asdf", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.isTypeOf("number", result.numberValue);
 				Y.Assert.isNaN(result.numberValue);
 			},
 			
 			testMinusSpacing6: function() {
-				var result = documentEvaluate("asdf -asdf", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("asdf -asdf", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.isTypeOf("number", result.numberValue);
 				Y.Assert.isNaN(result.numberValue);
 			},
 			
 			testMinusSpacing7: function() {
-				var result = documentEvaluate("asdf - asdf", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("asdf - asdf", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.isTypeOf("number", result.numberValue);
 				Y.Assert.isNaN(result.numberValue);
 			},
@@ -2010,7 +2010,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -2021,38 +2021,38 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
 			},
 			
 			testModSpacing1: function() {
-				var result = documentEvaluate("1mod1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1mod1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testModSpacing2: function() {
-				var result = documentEvaluate("1 mod1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1 mod1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testModSpacing3: function() {
-				var result = documentEvaluate("1mod 1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1mod 1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testModSpacing4: function() {
-				var result = documentEvaluate("'1'mod'1'", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("'1'mod'1'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
 			testModSpacing5: function() {
-				documentEvaluate("'1' mod/html'", doc, null, XPathResult.NUMBER_TYPE, null);
+				documentEvaluate("'1' mod/html'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 			},
 			
 			testModSpacing6: function() {
-				var result = documentEvaluate("'1'mod '1'", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("'1'mod '1'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(0, result.numberValue);
 			},
 			
@@ -2076,7 +2076,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -2089,39 +2089,39 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
 			},
 			
 			testDivSpacing1: function() {
-				var result = documentEvaluate("1div1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1div1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
 			testDivSpacing2: function() {
-				var result = documentEvaluate("1 div1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1 div1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
 			testDivSpacing3: function() {
-				var result = documentEvaluate("1div 1", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("1div 1", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
 			testDivSpacing4: function() {
-				var result = documentEvaluate("'1'div'1'", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("'1'div'1'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
 			testDivSpacing5: function() {
-				var result = documentEvaluate("'1' div'1'", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("'1' div'1'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
 			testDivSpacing6: function() {
-				var result = documentEvaluate("'1'div '1'", doc, null, XPathResult.NUMBER_TYPE, null);
+				var result = documentEvaluate("'1'div '1'", doc, null, win.XPathResult.NUMBER_TYPE, null);
 				Y.Assert.areSame(1, result.numberValue);
 			},
 			
@@ -2147,7 +2147,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -2159,7 +2159,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
@@ -2186,7 +2186,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 				
@@ -2196,7 +2196,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.isTypeOf("number", result.numberValue);
 					Y.Assert.isNaN(result.numberValue);
 				}
@@ -2216,7 +2216,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.NUMBER_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.NUMBER_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.numberValue);
 				}
 			}
@@ -2235,32 +2235,32 @@ YUI.add('xpathjs-test', function (Y) {
 			},
 			
 			testAndSpacing1: function() {
-				var result = documentEvaluate("1and1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1and1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testAndSpacing2: function() {
-				var result = documentEvaluate("1 and1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 and1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testAndSpacing3: function() {
-				var result = documentEvaluate("1 and\r\n\t1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 and\r\n\t1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testAndSpacing4: function() {
-				var result = documentEvaluate("1and 1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1and 1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testAndSpacing5: function() {
-				var result = documentEvaluate("'1'and'1'", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("'1'and'1'", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testAndLetterCase: function() {
-				var result = documentEvaluate("1 And 1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 And 1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
@@ -2288,7 +2288,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue);
 				}
 			},
@@ -2304,38 +2304,38 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue);
 				}
 			},
 			
 			testOrSpacing1: function() {
-				var result = documentEvaluate("1or1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1or1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testOrSpacing2: function() {
-				var result = documentEvaluate("1 or1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 or1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testOrSpacing3: function() {
-				var result = documentEvaluate("1 or\r\n\t1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 or\r\n\t1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testOrSpacing4: function() {
-				var result = documentEvaluate("1or 1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1or 1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testOrSpacing5: function() {
-				var result = documentEvaluate("'1'or'1'", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("'1'or'1'", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
 			testOrLetterCase: function() {
-				var result = documentEvaluate("1 OR 1", doc, null, XPathResult.BOOLEAN_TYPE, null);
+				var result = documentEvaluate("1 OR 1", doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 				Y.Assert.areSame(true, result.booleanValue);
 			},
 			
@@ -2363,7 +2363,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue);
 				}
 			},
@@ -2379,7 +2379,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue);
 				}
 			},
@@ -2397,7 +2397,7 @@ YUI.add('xpathjs-test', function (Y) {
 				
 				for(i=0; i<input.length; i++)
 				{
-					result = documentEvaluate(input[i][0], doc, null, XPathResult.BOOLEAN_TYPE, null);
+					result = documentEvaluate(input[i][0], doc, null, win.XPathResult.BOOLEAN_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.booleanValue);
 				}
 			}
@@ -2437,7 +2437,7 @@ YUI.add('xpathjs-test', function (Y) {
 				for(i=0; i<input.length; i++)
 				{
 					Y.Assert.areSame(input[i][2], input[i][1].nodeType);
-					result = documentEvaluate(input[i][0], input[i][1], null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+					result = documentEvaluate(input[i][0], input[i][1], null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 					Y.Assert.areSame(input[i][1], result.singleNodeValue);
 				}
 			},
@@ -2447,19 +2447,19 @@ YUI.add('xpathjs-test', function (Y) {
 				var result, i, item;
 				
 				// get a namespace node
-				result = documentEvaluate("namespace::node()", doc.getElementById('testContextNodeParameterNamespace'), null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+				result = documentEvaluate("namespace::node()", doc.getElementById('testContextNodeParameterNamespace'), null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 				item = result.singleNodeValue;
 				Y.Assert.isNotNull(item);
 				Y.Assert.areSame(item.nodeType, 13);
 				
 				// use namespacenode as a context node
-				result = documentEvaluate(".", item, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+				result = documentEvaluate(".", item, null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 				Y.Assert.areSame(item, result.singleNodeValue);
 			},
 			
 			testContextNodeParameterExceptionDocumentFragment: function()
 			{
-				documentEvaluate(".", doc.createDocumentFragment(), null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+				documentEvaluate(".", doc.createDocumentFragment(), null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 			}
 		});
 		
@@ -2508,7 +2508,7 @@ YUI.add('xpathjs-test', function (Y) {
 				{
 					var result;
 					
-					result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace'), null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+					result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace'), null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 					return result.singleNodeValue;
 				}
 				
@@ -3367,8 +3367,8 @@ YUI.add('xpathjs-test', function (Y) {
 					['xml', 'http://www.w3.org/XML/1998/namespace']
 				];
 				
-				result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-				result2 = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1b'), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				result2 = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1b'), null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 				Y.Assert.areSame(expectedResult.length, result.snapshotLength);
 				Y.Assert.areSame(expectedResult.length, result2.snapshotLength);
@@ -3401,8 +3401,8 @@ YUI.add('xpathjs-test', function (Y) {
 					['xml', 'http://www.w3.org/XML/1998/namespace']
 				];
 				
-				result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-				result2 = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				result = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				result2 = documentEvaluate("namespace::node()", doc.getElementById('testStepAxisNodeNamespace1'), null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 				Y.Assert.areSame(expectedResult.length, result.snapshotLength);
 				Y.Assert.areSame(expectedResult.length, result2.snapshotLength);
@@ -4062,7 +4062,7 @@ YUI.add('xpathjs-test', function (Y) {
 				{
 					var result, item;
 					
-					result = documentEvaluate("namespace::node()", node, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+					result = documentEvaluate("namespace::node()", node, null, win.XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 					item = result.singleNodeValue;
 					Y.Assert.isNotNull(item);
 					Y.Assert.areSame(item.nodeType, 13);
@@ -4260,7 +4260,7 @@ YUI.add('xpathjs-test', function (Y) {
 						for(i=0; i<input.length; i++) // all cases
 						{
 							expr = input[i][0][j % 2] + " " + ops[k] + " " + input[i][0][(j+1) % 2];
-							result = documentEvaluate(expr, input[i][2], null, XPathResult.BOOLEAN_TYPE, null);
+							result = documentEvaluate(expr, input[i][2], null, win.XPathResult.BOOLEAN_TYPE, null);
 							Y.Assert.areSame(input[i][1][k], result.booleanValue, 'Values should be the same. (xpath: "' + expr + '")');
 						}
 					}
@@ -4345,7 +4345,7 @@ YUI.add('xpathjs-test', function (Y) {
 					for(i=0; i<input.length; i++) // all cases
 					{
 						expr = input[i][0][0] + " " + ops[k] + " " + input[i][0][1];
-						result = documentEvaluate(expr, input[i][2], null, XPathResult.BOOLEAN_TYPE, null);
+						result = documentEvaluate(expr, input[i][2], null, win.XPathResult.BOOLEAN_TYPE, null);
 						Y.Assert.areSame(input[i][1][k], result.booleanValue, 'Values should be the same. (xpath: "' + expr + '")');
 					}
 				}
@@ -4456,7 +4456,7 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			testNamespaceAttributeSameElement: function()
 			{
-				var result = documentEvaluate("id('nss25')/namespace::*", doc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				var result = documentEvaluate("id('nss25')/namespace::*", doc, null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 				checkNodeResult("id('nss25')/namespace::* | id('nss25')/attribute::*", doc,
 					snapshotToArray(result).concat(
@@ -4467,7 +4467,7 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			testNamespaceNamespaceSameElement: function()
 			{
-				var result = documentEvaluate("id('nss40')/namespace::*", doc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				var result = documentEvaluate("id('nss40')/namespace::*", doc, null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 				checkNodeResult("id('nss40')/namespace::* | id('nss40')/namespace::*", doc,
 					snapshotToArray(result)
@@ -4476,7 +4476,7 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			testNamespaceAttributeElement: function()
 			{
-				var result = documentEvaluate("id('nss40')/namespace::*", doc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				var result = documentEvaluate("id('nss40')/namespace::*", doc, null, win.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				
 				checkNodeResult("id('nss40')/namespace::* | id('nss25')/attribute::* | id('nss25')", doc, [
 					doc.getElementById('nss25')].concat(
