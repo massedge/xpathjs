@@ -874,9 +874,12 @@ XPathParser.prototype.tokenize = function(s1) {
 		if (c == '\'' || c == '"') {
 			var delimiter = c;
 			var literal = "";
-			while ((c = s.charAt(pos++)) != delimiter) {
+			while ((c = s.charAt(pos++)) != delimiter && c != "") {
 				literal += c;
 			}
+			if (c == "")
+				throw new Error("Unclosed literal string " + literal);
+			
 			types.push(XPathParser.LITERAL);
 			values.push(literal);
 			c = s.charAt(pos++);
