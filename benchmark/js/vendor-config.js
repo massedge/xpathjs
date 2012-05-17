@@ -14,6 +14,8 @@ libs = [
 		link: "https://github.com/andrejpavlovic/xpathjs",
 		scripts: [
 			"../build/xpathjs.min.js"
+			//"../src/engine.js",
+			//"../build/parser.js"
 		],
 		initFn: function(win) {
 			win.XPathJS.bindDomLevel3XPath(

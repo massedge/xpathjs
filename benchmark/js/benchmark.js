@@ -27,15 +27,149 @@ speedTests = [
 	{ expression: 'descendant::*[contains(@class," fruit ")]' }
 ];
 
-YUI().use("node", "io", "get", function (Y) {
+YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test", function (Y) {
 	
 	Y.on("domready", init); 
 	
 	function init()
 	{
+		// configure frames
+		Y.io("test.html", {
+		//Y.io("../tests/index.php", {
+			on: {
+				success: function(transactionid, response, arguments) {
+					var content = response.responseText,
+						numOfLibsInitialized = 0;
+					
+					// load an iframe for each xpath library
+					Y.Array.each(libs, function(lib, i){
+						lib.iframe = initializeTestFrame(lib, response.responseText, function() {
+							numOfLibsInitialized++;
+							
+							if (numOfLibsInitialized >= libs.length)
+							{
+								// all iframes have been initialized (one for each library), so proceed to run tests
+								runSpeedTests(libs, Y.one("#benchmarkSpeed"));
+								//runCorrectnessTests(libs, Y.one("#benchmarkCorrectness"));
+							}
+						});
+					});
+				}
+			}
+		});
+	}
+	
+	function runCorrectnessTests(libs, containerNode)
+	{
 		// create table
 		var table = Y.one(document.createElement("table"));
-		Y.one("#benchmarkSpeed").append(table);
+		containerNode.append(table);
+		
+		// create library name header
+		var libraryNameHeader = Y.Node.create('<tr><th>Test Name</th></tr>');
+		table.append(libraryNameHeader);
+		
+		Y.Array.each(libs, function(lib){
+			var titleNode = Y.one(document.createTextNode(lib.name));
+			
+			if (lib.link) {
+				titleNode = Y.one(document.createElement("a")).append(
+					titleNode
+				).setAttrs({"href": lib.link, "target": "_blank"});
+			}
+			
+			libraryNameHeader.append(
+				Y.Node.create('<th></th>').append(titleNode)
+			);
+			
+			lib.testSuite = Y.XPathJS.Test.generateTestSuite(
+				lib.iframe.contentWindow.document,
+				function(expression, contextNode, resolver, type, result) {
+					return lib.evaluate(lib.iframe.contentWindow, expression, contextNode, resolver, type, result);
+				}
+			);
+		});
+		
+		// create row headers, use first lib
+		Y.Array.each(libs[0].testSuite.items, function(testCase){
+			table.append(
+				Y.Node.create('<tr></tr>').append(
+					Y.Node.create('<th></th>')
+						.setAttribute("colspan", libs.length + 1)
+						.append(
+							Y.one(document.createTextNode(testCase.name))
+						)
+				)
+			)
+			
+			Y.Object.each(testCase, function(test, testName) {
+				if (testName.substring(0, 4) != "test")
+					return;
+				
+				table.append(
+					Y.Node.create('<tr></tr>').append(
+						Y.Node.create('<th></th>')
+							.append(
+								Y.one(document.createTextNode(testName))
+							)
+					)
+				);
+			});
+		});
+		
+		var rows = table.all("tr"),
+			currentTestCase = null,
+			currentLibIndex = 0;
+			currentRow = 1,
+			handleTestResult = function(data) {
+				if (currentTestCase !== data.testCase) {
+					// skip row
+					currentRow++;
+					currentTestCase = data.testCase;
+				}
+				
+				rows.item(currentRow).append(
+					Y.Node.create('<td></td>')
+						.append(
+							Y.one(document.createTextNode(data.type))
+						)
+				);
+				
+				currentRow++;
+				//console.log(data);
+			},
+			handleTestComplete = function() {
+				// reset test runner
+				Y.Test.Runner.clear();
+				currentTestCase = null;
+				currentRow = 1;
+				
+				if (currentLibIndex < libs.length)
+				{
+					Y.Test.Runner.add(libs[currentLibIndex].testSuite);
+					currentLibIndex++;
+					Y.Test.Runner.run();
+				}
+			}
+		;
+		
+		Y.Test.Runner.subscribe("fail", handleTestResult);
+		Y.Test.Runner.subscribe("pass", handleTestResult);
+		Y.Test.Runner.subscribe("ignore", handleTestResult);
+		Y.Test.Runner.subscribe("complete", handleTestComplete);
+		
+		// run tests
+		handleTestComplete();
+	}
+	
+	function runSpeedTests(libs, containerNode)
+	{
+		var timeTotals = [],
+			nodeTotals = [];
+		
+		// create table
+		var table = Y.one(document.createElement("table"));
+		containerNode.append(table);
 		
 		// create library name header
 		var libraryNameHeader = Y.Node.create('<tr><th rowspan="2">Expression</th></tr>');
@@ -60,35 +194,6 @@ YUI().use("node", "io", "get", function (Y) {
 			resultHeader.append(Y.Node.create("<th>Time</th><th>Nodes</th>"));
 		});
 		
-		// configure frames
-		Y.io("test.html", {
-			on: {
-				success: function(transactionid, response, arguments) {
-					var iframes = [],
-						content = response.responseText,
-						numOfLibsInitialized = 0;
-					
-					Y.Array.each(libs, function(lib, i){
-						iframes[i] = initializeTestFrame(lib, response.responseText, function() {
-							numOfLibsInitialized++;
-							
-							if (numOfLibsInitialized >= libs.length)
-							{
-								// run test
-								runSpeedTests(table, iframes);
-							}
-						});
-					});
-				}
-			}
-		});
-	}
-	
-	function runSpeedTests(table, iframes)
-	{
-		var timeTotals = [],
-			nodeTotals = [];
-		
 		Y.Array.each(speedTests, function(test)
 		{
 			var row = Y.one(document.createElement("tr"));
@@ -102,7 +207,7 @@ YUI().use("node", "io", "get", function (Y) {
 			
 			Y.Array.each(libs, function(lib, index){
 				var result, time, numOfNodes, i,
-					win = iframes[index].contentWindow;
+					win = lib.iframe.contentWindow;
 				
 				try {
 					// start timer
@@ -110,7 +215,7 @@ YUI().use("node", "io", "get", function (Y) {
 					
 					for(i = 0; i < 10; i++)
 					{
-						result = lib.evaluate(iframes[index].contentWindow, test.expression, win.document, null, 7);
+						result = lib.evaluate(lib.iframe.contentWindow, test.expression, win.document, null, 7);
 					}
 					
 					time = (new Date().valueOf() - time) / i;
