@@ -30,7 +30,7 @@ if ($serve_xml)
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>xpath-test</title>
 		
-		<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui.js" type="text/javascript"></script>
+		<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js" type="text/javascript"></script>
 		
 		<?php if(!$use_native): ?>
 		<script src="../src/engine.js" type="text/javascript"></script>
