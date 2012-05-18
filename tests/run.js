@@ -102,7 +102,7 @@ YUI().use("node", "test-console", function (Y) {
 		
 		r.render('#testLogger');
 		
-		win.YUI({filter: "raw", useBrowserConsole: false}).use('xpathjs-test', "node", "test", "event", function (Y2) {
+		win.YUI({useBrowserConsole: false}).use('xpathjs-test', "node", "test", "event", function (Y2) {
 			
 			Y2.on("yui:log", function(e) {
 				Y.log(e.msg, e.cat, e.src);

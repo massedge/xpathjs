@@ -1,3 +1,19 @@
 .expression {
 	text-align:left;
 }
+
+.status {
+	text-align:center;
+}
+.status-fail {
+	background-color:#FFCECE;
+	color:#FF0000;
+}
+.status-pass {
+	background-color:#00AA00;
+	color:#00FF11;
+}
+.status-ignore {
+	background-color:#CCC;
+	color:#222;
+}

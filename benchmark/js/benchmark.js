@@ -27,15 +27,22 @@ speedTests = [
 	{ expression: 'descendant::*[contains(@class," fruit ")]' }
 ];
 
-YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test", function (Y) {
+YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-test", "io", "get", "test", function (Y) {
+	
+	var libs = Y.XPathJS.Test.Vendor.getAll();
 	
 	Y.on("domready", init); 
 	
 	function init()
 	{
+		runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
+			runTest(libs, "../tests/tests.php", runCorrectnessTests, Y.one("#benchmarkCorrectness"), function() {});
+		});
+	}
+	
+	function runTest(libs, testUrl, testFn, renderNode, finishedCallback) {
 		// configure frames
-		Y.io("test.html", {
-		//Y.io("../tests/index.php", {
+		Y.io(testUrl, {
 			on: {
 				success: function(transactionid, response, arguments) {
 					var content = response.responseText,
@@ -49,8 +56,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 							if (numOfLibsInitialized >= libs.length)
 							{
 								// all iframes have been initialized (one for each library), so proceed to run tests
-								runSpeedTests(libs, Y.one("#benchmarkSpeed"));
-								//runCorrectnessTests(libs, Y.one("#benchmarkCorrectness"));
+								testFn(libs, renderNode, finishedCallback);
 							}
 						});
 					});
@@ -59,7 +65,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 		});
 	}
 	
-	function runCorrectnessTests(libs, containerNode)
+	function runCorrectnessTests(libs, containerNode, finishedCallback)
 	{
 		// create table
 		var table = Y.one(document.createElement("table"));
@@ -164,7 +170,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 		handleTestComplete();
 	}
 	
-	function runSpeedTests(libs, containerNode)
+	function runSpeedTests(libs, containerNode, finishedCallback)
 	{
 		var timeTotals = [],
 			nodeTotals = [];
@@ -264,13 +270,17 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 				)
 			);
 		});
+		
+		finishedCallback();
 	}
 	
 	function initializeTestFrame(lib, htmlContent, finishedCallback)
 	{
 		// create iframe
-		var iframe = Y.one(document.createElement('iframe')).setStyle('display', 'none');
-		Y.one(document.body).append(iframe);
+		var iframe = Y.one(document.createElement('iframe'))
+			.setStyle('display', 'none')
+			.appendTo(Y.one(document.body))
+		;
 		
 		var win = iframe._node.contentWindow;
 		var doc = win.document;
@@ -281,6 +291,9 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-test", "io", "get", "test",
 		doc.close();
 		
 		// load all xpath scripts for this library
+		lib.scripts.unshift("../tests/tests.js");
+		lib.scripts.unshift("http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js");
+		
 		Y.Get.script(lib.scripts, {
 			onSuccess: function (e) {
 				e.purge();
