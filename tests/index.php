@@ -28,7 +28,6 @@
 		<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssbase/cssbase.css" type="text/css" />
 		
 		<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js" type="text/javascript"></script>
-		<script src="tests.js" type="text/javascript"></script>
 		<script src="run.js" type="text/javascript"></script>
 		
 		<style type="text/css">

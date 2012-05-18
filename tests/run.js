@@ -16,7 +16,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
+YUI().use("node", "test-console", function (Y) {
 	
 	Y.on("domready", init); 
 	
@@ -52,7 +52,8 @@ YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
 	
 	function attachScripts(win, useNative, useXml) {
 		var scripts = [
-			"../benchmark/js/dummy.js"
+			"http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js",
+			"tests.js"
 		];
 		
 		if (!useNative) {
@@ -62,9 +63,6 @@ YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
 		
 		// load all xpath scripts for this library
 		Y.Get.script(scripts, {
-			attributes: {
-				type: "text/javascript"
-			},
 			onSuccess: function (e) {
 				// remove script tags
 				e.purge();
@@ -101,17 +99,30 @@ YUI().use('xpathjs-test', "node", "test-console", "test", function (Y) {
 		 * @see http://yuilibrary.com/projects/yui3/ticket/2531085
 		 */
 		Y.Console.FOOTER_TEMPLATE = Y.Console.FOOTER_TEMPLATE.replace('id="{id_guid}">', 'id="{id_guid}" />');
-	
+		
 		r.render('#testLogger');
-	
-		Y.Test.Runner.add(Y.XPathJS.Test.generateTestSuite(win, win.document, win.document.evaluate));
-	
-		//run the tests
-		Y.Test.Runner.run();
+		
+		win.YUI({filter: "raw", useBrowserConsole: false}).use('xpathjs-test', "node", "test", "event", function (Y2) {
+			
+			Y2.on("yui:log", function(e) {
+				Y.log(e.msg, e.cat, e.src);
+			});
+			
+			Y2.Test.Runner.add(Y2.XPathJS.Test.generateTestSuite(win, win.document, win.document.evaluate));
+		
+			//run the tests
+			Y2.Test.Runner.run();
+		});
 	}
 	
 	function getParameterFromUrl(url, param) {
 		var regexp = new RegExp("(?:\\?|&)" + param + "(?:$|&|=)([^&#]*)");
-		return parseInt(regexp.exec(url)[1]);
+			value = regexp.exec(url)
+		;
+		
+		if (value === null)
+			return 0;
+		
+		return parseInt(value[1]);
 	}
 });

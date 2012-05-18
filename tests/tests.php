@@ -30,8 +30,6 @@ if ($serve_xml)
 		<title>xpath-test</title>
 	</head>
 	<body class="yui3-skin-sam">
-		<div id="testLogger"></div>
-		
 		<div id="testXPathNSResolver">
 			<div id="testXPathNSResolverNode" xmlns:xforms="http://www.w3.org/2002/xforms">
 				<div xmlns="http://www.w3.org/TR/REC-html40">
