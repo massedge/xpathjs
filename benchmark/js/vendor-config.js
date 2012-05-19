@@ -55,7 +55,7 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		libs.push({
 			name: "Native",
 			scripts: [
-				"js/dummy.js"
+				"../benchmark/js/dummy.js"
 			],
 			evaluate: function(win, expression, contextNode, resolver, type, result) {
 				return win.document.evaluate(expression, contextNode, resolver, type, result);
@@ -67,7 +67,7 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 			name: "JavaScript-XPath",
 			link: "http://coderepos.org/share/wiki/JavaScript-XPath",
 			scripts: [
-				"vendor/javascript-xpath/javascript-xpath-0.1.12-cmp.js"
+				"../benchmark/vendor/javascript-xpath/javascript-xpath-0.1.12-cmp.js"
 			],
 			evaluate: function(win, expression, contextNode, resolver, type, result) {
 				return win.document.evaluate(expression, contextNode, resolver, type, result);
@@ -78,8 +78,8 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		name: "Llama Lab's XPath.js",
 		link: "http://llamalab.com/js/xpath/",
 		scripts: [
-			"vendor/llamalab/Array.js",
-			"vendor/llamalab/XPath.min.js"
+			"../benchmark/vendor/llamalab/Array.js",
+			"../benchmark/vendor/llamalab/XPath.min.js"
 		],
 		evaluate: function(win, expression, contextNode, resolver, type, result) {
 			return win.document.evaluate(expression, contextNode, resolver, type, result);
@@ -90,10 +90,10 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		name: "Google AJAXSLT",
 		link: "http://code.google.com/p/ajaxslt/",
 		scripts: [
-			"vendor/google-ajaxslt/util.js",
-			"vendor/google-ajaxslt/xmltoken.js",
-			"vendor/google-ajaxslt/dom.js",
-			"vendor/google-ajaxslt/xpath.js"
+			"../benchmark/vendor/google-ajaxslt/util.js",
+			"../benchmark/vendor/google-ajaxslt/xmltoken.js",
+			"../benchmark/vendor/google-ajaxslt/dom.js",
+			"../benchmark/vendor/google-ajaxslt/xpath.js"
 		],
 		evaluate: function(win, expression, contextNode, resolver, type, result) {
 			var nl = win.xpathEval(expression, new win.ExprContext(contextNode));
@@ -107,7 +107,7 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		name: "Cameron McCormack",
 		link: "http://mcc.id.au/xpathjs",
 		scripts: [
-			"vendor/mccormack/xpath.js"
+			"../benchmark/vendor/mccormack/xpath.js"
 		],
 		initFn: function(win) {
 			win.xpathParser = new win.XPathParser();

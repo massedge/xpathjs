@@ -27,7 +27,7 @@ speedTests = [
 	{ expression: 'descendant::*[contains(@class," fruit ")]' }
 ];
 
-YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-test", "io", "get", "test", function (Y) {
+YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-test", "get", "test", function (Y) {
 	
 	var libs = Y.XPathJS.Test.Vendor.getAll();
 	
@@ -35,33 +35,25 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 	
 	function init()
 	{
-		//runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
+		runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
 			runTest(libs, "../tests/tests.php", runCorrectnessTests, Y.one("#benchmarkCorrectness"), function() {});
-		//});
+		});
 	}
 	
 	function runTest(libs, testUrl, testFn, renderNode, finishedCallback) {
-		// configure frames
-		Y.io(testUrl, {
-			on: {
-				success: function(transactionid, response, arguments) {
-					var content = response.responseText,
-						numOfLibsInitialized = 0;
-					
-					// load an iframe for each xpath library
-					Y.Array.each(libs, function(lib, i){
-						lib.iframe = initializeTestFrame(lib, response.responseText, function() {
-							numOfLibsInitialized++;
-							
-							if (numOfLibsInitialized >= libs.length)
-							{
-								// all iframes have been initialized (one for each library), so proceed to run tests
-								testFn(libs, renderNode, finishedCallback);
-							}
-						});
-					});
+		var numOfLibsInitialized = 0;
+		
+		// load an iframe for each xpath library
+		Y.Array.each(libs, function(lib, i){
+			lib.iframe = initializeTestFrame(lib, testUrl, function() {
+				numOfLibsInitialized++;
+				
+				if (numOfLibsInitialized >= libs.length)
+				{
+					// all iframes have been initialized (one for each library), so proceed to run tests
+					testFn(libs, renderNode, finishedCallback);
 				}
-			}
+			});
 		});
 	}
 	
@@ -285,41 +277,45 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 		finishedCallback();
 	}
 	
-	function initializeTestFrame(lib, htmlContent, finishedCallback)
+	function initializeTestFrame(lib, testUrl, finishedCallback)
 	{
 		// create iframe
 		var iframe = Y.one(document.createElement('iframe'))
-			.setStyle('display', 'none')
-			.appendTo(Y.one(document.body))
+				.setStyle('display', 'none')
+				.appendTo(Y.one(document.body)),
+			iframeLoaded = function() {
+				var win = iframe._node.contentWindow;
+				
+				// load all xpath scripts for this library
+				lib.scripts.unshift("../tests/tests.js");
+				lib.scripts.unshift("../benchmark/js/vendor-config.js");
+				lib.scripts.unshift("http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js");
+				
+				Y.Get.script(lib.scripts, {
+					onSuccess: function (e) {
+						e.purge();
+						
+						if (lib.initFn)
+						{
+							// initialize library
+							lib.initFn(win);
+						}
+						
+						finishedCallback();
+					},
+					win: win
+				});
+			}
 		;
 		
-		var win = iframe._node.contentWindow;
-		var doc = win.document;
+		// @see http://www.nczonline.net/blog/2009/09/15/iframes-onload-and-documentdomain/
+		if (iframe._node.attachEvent) {
+			iframe._node.attachEvent("onload", iframeLoaded);
+		} else {
+			iframe.set('onload', iframeLoaded);
+		}
 		
-		// populate content
-		doc.open();
-		doc.write(htmlContent);
-		doc.close();
-		
-		// load all xpath scripts for this library
-		lib.scripts.unshift("../tests/tests.js");
-		lib.scripts.unshift("js/vendor-config.js");
-		lib.scripts.unshift("http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js");
-		
-		Y.Get.script(lib.scripts, {
-			onSuccess: function (e) {
-				e.purge();
-				
-				if (lib.initFn)
-				{
-					// initialize library
-					lib.initFn(win);
-				}
-				
-				finishedCallback();
-			},
-			win: win
-		});
+		iframe.set('src', testUrl);
 		
 		return iframe._node;
 	}
