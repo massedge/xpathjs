@@ -127,6 +127,10 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		return libs;
 	}
 	
+	Y.namespace("XPathJS.Test.Vendor").getByIndex = function(index) {
+		return libs[index];
+	}
+	
 }, '0.0.1', {
 	requires: []
 });

@@ -27,7 +27,7 @@ speedTests = [
 	{ expression: 'descendant::*[contains(@class," fruit ")]' }
 ];
 
-YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-test", "io", "get", "test", function (Y) {
+YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-test", "io", "get", "test", function (Y) {
 	
 	var libs = Y.XPathJS.Test.Vendor.getAll();
 	
@@ -35,9 +35,9 @@ YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-te
 	
 	function init()
 	{
-		runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
+		//runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
 			runTest(libs, "../tests/tests.php", runCorrectnessTests, Y.one("#benchmarkCorrectness"), function() {});
-		});
+		//});
 	}
 	
 	function runTest(libs, testUrl, testFn, renderNode, finishedCallback) {
@@ -87,18 +87,10 @@ YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-te
 			libraryNameHeader.append(
 				Y.Node.create('<th></th>').append(titleNode)
 			);
-			
-			lib.testSuite = Y.XPathJS.Test.generateTestSuite(
-				lib.iframe.contentWindow,
-				lib.iframe.contentWindow.document,
-				function(expression, contextNode, resolver, type, result) {
-					return lib.evaluate(lib.iframe.contentWindow, expression, contextNode, resolver, type, result);
-				}
-			);
 		});
 		
 		// create row headers, use first lib
-		Y.Array.each(libs[0].testSuite.items, function(testCase){
+		Y.Array.each(Y.XPathJS.Test.generateTestSuite().items, function(testCase){
 			table.append(
 				Y.Node.create('<tr></tr>').append(
 					Y.Node.create('<th></th>')
@@ -154,17 +146,36 @@ YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-te
 				
 				if (currentLibIndex < libs.length)
 				{
-					Y.Test.Runner.add(libs[currentLibIndex].testSuite);
-					currentLibIndex++;
-					Y.Test.Runner.run();
+					var lib = libs[currentLibIndex],
+						win = lib.iframe.contentWindow
+					;
+					
+					win.YUI({useBrowserConsole: false}).use("xpathjs-test", "xpathjs-vendor-config", "node", "test", "event", function (Y2) {
+						var lib2 = Y2.XPathJS.Test.Vendor.getByIndex(currentLibIndex);
+						
+						var suite = Y2.XPathJS.Test.generateTestSuite(
+							win,
+							win.document,
+							function(expression, contextNode, resolver, type, result) {
+								return lib2.evaluate(win, expression, contextNode, resolver, type, result);
+							}
+						);
+						
+						Y2.Test.Runner.subscribe("fail", handleTestResult);
+						Y2.Test.Runner.subscribe("pass", handleTestResult);
+						Y2.Test.Runner.subscribe("ignore", handleTestResult);
+						Y2.Test.Runner.subscribe("complete", handleTestComplete);
+						
+						Y2.Test.Runner.add(suite);
+						
+						currentLibIndex++;
+					
+						// run the tests
+						Y2.Test.Runner.run();
+					});
 				}
 			}
 		;
-		
-		Y.Test.Runner.subscribe("fail", handleTestResult);
-		Y.Test.Runner.subscribe("pass", handleTestResult);
-		Y.Test.Runner.subscribe("ignore", handleTestResult);
-		Y.Test.Runner.subscribe("complete", handleTestComplete);
 		
 		// run tests
 		handleTestComplete();
@@ -292,6 +303,7 @@ YUI({useBrowserConsole: false}).use("node", 'xpathjs-vendor-config', "xpathjs-te
 		
 		// load all xpath scripts for this library
 		lib.scripts.unshift("../tests/tests.js");
+		lib.scripts.unshift("js/vendor-config.js");
 		lib.scripts.unshift("http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js");
 		
 		Y.Get.script(lib.scripts, {
