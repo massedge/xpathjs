@@ -36,11 +36,11 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 	function init()
 	{
 		runTest(libs, "test.html", runSpeedTests, Y.one("#benchmarkSpeed"), function() {
-			runTest(libs, "../tests/tests.php", runCorrectnessTests, Y.one("#benchmarkCorrectness"), function() {});
-		});
+			runTest(libs, "../tests/tests.php", runCorrectnessTests, Y.one("#benchmarkCorrectness"), function() {}, {quasiXpath: false});
+		}, {quasiXpath: true});
 	}
 	
-	function runTest(libs, testUrl, testFn, renderNode, finishedCallback) {
+	function runTest(libs, testUrl, testFn, renderNode, finishedCallback, options) {
 		var numOfLibsInitialized = 0;
 		
 		// load an iframe for each xpath library
@@ -53,7 +53,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 					// all iframes have been initialized (one for each library), so proceed to run tests
 					testFn(libs, renderNode, finishedCallback);
 				}
-			});
+			}, options);
 		});
 	}
 	
@@ -277,7 +277,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 		finishedCallback();
 	}
 	
-	function initializeTestFrame(lib, testUrl, finishedCallback)
+	function initializeTestFrame(lib, testUrl, finishedCallback, options)
 	{
 		// create iframe
 		var iframe = Y.one(document.createElement('iframe'))
@@ -298,7 +298,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 						if (lib.initFn)
 						{
 							// initialize library
-							lib.initFn(win);
+							lib.initFn(win, options);
 						}
 						
 						finishedCallback();

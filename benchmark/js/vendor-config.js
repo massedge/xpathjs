@@ -29,13 +29,18 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 			//"../src/engine.js",
 			//"../build/parser.js"
 		],
-		initFn: function(win) {
+		initFn: function(win, options) {
+			var bindingOptions = {};
+			
+			if (options.quasiXpath) {
+				// assume id not belonging to a namespace, is a unique id as defined by spec
+				bindingOptions['unique-ids'] = {
+					'' : 'id'
+				}
+			}
+			
 			win.XPathJS.bindDomLevel3XPath(
-				win.XPathJS.createDomLevel3XPathBindings({
-					'unique-ids': {
-						'' : 'id'
-					}
-				})
+				win.XPathJS.createDomLevel3XPathBindings(bindingOptions)
 			);
 		},
 		createExpression: function(win, expression, resolver) {
