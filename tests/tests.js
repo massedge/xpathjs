@@ -3479,24 +3479,10 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			testStepAxisNodeAttrib2Ns1reversed: function()
 			{
-				var attributes = [],
-					i,
-					contextNode
+				var contextNode = doc.getElementById('testStepAxisNodeAttrib2Ns1reversedContainer').firstChild,
+					attributes = filterAttributes(contextNode.attributes),
+					i
 				;
-				
-				contextNode = doc.getElementById('testStepAxisNodeAttrib2Ns1reversedContainer').firstChild;
-				
-				for(i=0; i<contextNode.attributes.length; i++)
-				{
-					if (!contextNode.attributes[i].specified)
-					{
-						continue;
-					}
-					if (contextNode.attributes.item(i).nodeName.substring(0, 5) !== 'xmlns')
-					{
-						attributes.push(contextNode.attributes.item(i));
-					}
-				}
 				
 				checkNodeResult("attribute::node()", contextNode, attributes);
 				
@@ -3509,24 +3495,10 @@ YUI.add('xpathjs-test', function (Y) {
 			
 			testStepAxisNodeAttrib2Ns2: function()
 			{
-				var attributes = [],
-					i,
-					contextNode
+				var contextNode = doc.getElementById('testStepAxisNodeAttrib2Ns2Container').firstChild,
+					attributes = filterAttributes(contextNode.attributes),
+					i
 				;
-				
-				contextNode = doc.getElementById('testStepAxisNodeAttrib2Ns2Container').firstChild;
-				
-				for(i=0; i<contextNode.attributes.length; i++)
-				{
-					if (!contextNode.attributes[i].specified)
-					{
-						continue;
-					}
-					if (contextNode.attributes.item(i).nodeName.substring(0, 5) !== 'xmlns')
-					{
-						attributes.push(contextNode.attributes.item(i));
-					}
-				}
 				
 				checkNodeResult("attribute::node()", contextNode, attributes);
 				

@@ -2167,29 +2167,28 @@ XPathJS = (function(){
 							{
 								return namespace;
 							}
-						}
-						/**
-						 * IE puts all namespaces inside document.namespaces for HTML node
-						 *
-						 * @see http://msdn.microsoft.com/en-us/library/ms537470(VS.85).aspx
-						 * @see http://msdn.microsoft.com/en-us/library/ms535854(v=VS.85).aspx
-						 */
-						else if (node.ownerDocument.documentElement === node && typeof node.ownerDocument.namespaces === 'object')
-						{
-							for(i=0; i<node.ownerDocument.namespaces.length; i++)
+						} else {
+							/**
+							 * IE puts all namespaces inside document.namespaces for HTML node
+							 *
+							 * @see http://msdn.microsoft.com/en-us/library/ms537470(VS.85).aspx
+							 * @see http://msdn.microsoft.com/en-us/library/ms535854(v=VS.85).aspx
+							 */
+							if (node.ownerDocument.documentElement === node && typeof node.ownerDocument.namespaces === 'object')
 							{
-								namespace = node.ownerDocument.namespaces.item(i);
-								if (namespace.name == prefix)
+								for(i=0; i<node.ownerDocument.namespaces.length; i++)
 								{
-									return namespace.urn;
+									namespace = node.ownerDocument.namespaces.item(i);
+									if (namespace.name == prefix)
+									{
+										return namespace.urn;
+									}
 								}
 							}
-						}
-						/**
-						 * Normal attribute checking for namespace declarations
-						 */
-						else
-						{
+							
+							/**
+							 * Normal attribute checking for namespace declarations
+							 */
 							for(i=0; i<node.attributes.length; i++)
 							{
 								if (!node.attributes[i].specified)
