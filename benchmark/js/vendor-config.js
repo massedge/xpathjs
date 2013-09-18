@@ -21,6 +21,14 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 	// library configuration
 	var libs = [];
 	
+	Y.namespace("XPathJS.Test.Vendor").getAll = function() {
+		return libs;
+	}
+	
+	Y.namespace("XPathJS.Test.Vendor").getByIndex = function(index) {
+		return libs[index];
+	}
+	
 	libs.push({
 		name: "XpathJS",
 		link: "https://github.com/andrejpavlovic/xpathjs",
@@ -69,14 +77,28 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 	}
 	
 	libs.push({
-			name: "JavaScript-XPath",
-			link: "http://coderepos.org/share/wiki/JavaScript-XPath",
-			scripts: [
-				"../benchmark/vendor/javascript-xpath/javascript-xpath-0.1.12-cmp.js"
-			],
-			evaluate: function(win, expression, contextNode, resolver, type, result) {
-				return win.document.evaluate(expression, contextNode, resolver, type, result);
-			}
+		name: "Wicked Good XPath",
+		link: "https://code.google.com/p/wicked-good-xpath/",
+		scripts: [
+			"../benchmark/vendor/wicked-good-xpath/wgxpath.install.js"
+		],
+		initFn: function(win, options) {
+			win.wgxpath.install(win);
+		},
+		evaluate: function(win, expression, contextNode, resolver, type, result) {
+			return win.document.evaluate(expression, contextNode, resolver, type, result);
+		}
+	});
+	
+	libs.push({
+		name: "JavaScript-XPath",
+		link: "http://coderepos.org/share/wiki/JavaScript-XPath",
+		scripts: [
+			"../benchmark/vendor/javascript-xpath/javascript-xpath-0.1.12-cmp.js"
+		],
+		evaluate: function(win, expression, contextNode, resolver, type, result) {
+			return win.document.evaluate(expression, contextNode, resolver, type, result);
+		}
 	});
 	
 	libs.push({
@@ -127,14 +149,6 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 			return nodes;
 		}
 	});
-	
-	Y.namespace("XPathJS.Test.Vendor").getAll = function() {
-		return libs;
-	}
-	
-	Y.namespace("XPathJS.Test.Vendor").getByIndex = function(index) {
-		return libs[index];
-	}
 	
 }, '0.0.1', {
 	requires: []

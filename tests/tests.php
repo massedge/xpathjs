@@ -38,9 +38,9 @@ if ($serve_xml)
 				<xforms:model>
 				  <xforms:instance>
 				    <ecommerce xmlns="">
-				      <method/>
-				      <number/>
-				      <expiry/>
+				      <method></method>
+				      <number></number>
+				      <expiry></expiry>
 				    </ecommerce>
 				  </xforms:instance>
 				  <xforms:submission action="http://example.com/submit" method="post" id="submit" includenamespaceprefixes=""/>

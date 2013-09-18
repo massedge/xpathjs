@@ -363,15 +363,14 @@ XPathJS = (function(){
 				default:
 					return node.ownerDocument
 			}
-		}
+		},
 		
 		/**
-		 * Return attributes of given element (no namespaces of course). Empty array otherwise
-		 *
-		 * @param {Node} node
+		 * Return attributes of given element in document order regardless of whether they may be namespace nodes or not.
+		 * 
 		 * @return {Array} List of attribute nodes in document order
 		 */
-		nodeAttribute = function(node)
+		nodeGetAttributes = function(node) 
 		{
 			var nodes = [],
 				i
@@ -386,10 +385,42 @@ XPathJS = (function(){
 						continue;
 					}
 					
-					if (false === isNamespaceAttributeNode(node.attributes[i]))
-					{
-						nodes.push(node.attributes[i]);
-					}
+					nodes.push(node.attributes[i]);
+				}
+			}
+			
+			// sort attributes if compareDocumentPosition available
+			if (nodes.length > 1 && nodes[0].compareDocumentPosition) {
+				nodes.sort(function(a, b) {
+					var position = a.compareDocumentPosition(b);
+					
+					if ((position & 2) == 2) return 1;
+					else if ((position & 4) == 4) return -1;
+					else return 0;
+				});
+			}
+			
+			return nodes;
+		},
+		
+		/**
+		 * Return attributes of given element (no namespaces of course). Empty array otherwise
+		 *
+		 * @param {Node} node
+		 * @return {Array} List of attribute nodes in document order
+		 */
+		nodeAttribute = function(node)
+		{
+			var allAttributeNodes = nodeGetAttributes(node),
+				nodes = [],
+				i
+			;
+			
+			for(i = 0; i < allAttributeNodes.length; i++)
+			{
+				if (false === isNamespaceAttributeNode(allAttributeNodes[i]))
+				{
+					nodes.push(allAttributeNodes[i]);
 				}
 			}
 			
@@ -406,6 +437,7 @@ XPathJS = (function(){
 		nodeNamespace = function(node, nsNodes)
 		{
 			var nodes = (nsNodes || []),
+				allAttributeNodes,
 				i,
 				name,
 				item
@@ -428,14 +460,11 @@ XPathJS = (function(){
 					}
 				}
 				
-				for(i=node.attributes.length-1; i>=0; i--)
+				allAttributeNodes = nodeGetAttributes(node);
+				
+				for(i = allAttributeNodes.length-1; i>=0; i--)
 				{
-					if (!node.attributes[i].specified)
-					{
-						continue;
-					}
-					
-					if (false === (name = isNamespaceAttributeNode(node.attributes[i])))
+					if (false === (name = isNamespaceAttributeNode(allAttributeNodes[i])))
 					{
 						continue;
 					}
@@ -447,14 +476,14 @@ XPathJS = (function(){
 					 */
 					if (name.length === 1)
 					{
-						insertNamespaceIfNotDeclared.call(this, nodes, '', node.attributes[i].nodeValue, node);
+						insertNamespaceIfNotDeclared.call(this, nodes, '', allAttributeNodes[i].nodeValue, node);
 						continue;
 					}
 					
 					/**
 					 * Normal attribute checking for namespace declarations
 					 */
-					insertNamespaceIfNotDeclared.call(this, nodes, name[1], node.attributes[i].nodeValue, node);
+					insertNamespaceIfNotDeclared.call(this, nodes, name[1], allAttributeNodes[i].nodeValue, node);
 				}
 				
 				/**
@@ -657,9 +686,10 @@ XPathJS = (function(){
 				 * is no applicable default namespace.
 				 */
 				case 1: // element
-					// TODO: provide option for case sensitivity
-					
-					if (typeof node.scopeName != 'undefined')
+					/**
+					 * @see http://tanalin.com/en/articles/ie-version-js/
+					 */
+					if (typeof node.scopeName != 'undefined' && /* < IE9 */ !document.addEventListener)
 					{
 						/**
 						 * IE specific
@@ -2137,29 +2167,28 @@ XPathJS = (function(){
 							{
 								return namespace;
 							}
-						}
-						/**
-						 * IE puts all namespaces inside document.namespaces for HTML node
-						 *
-						 * @see http://msdn.microsoft.com/en-us/library/ms537470(VS.85).aspx
-						 * @see http://msdn.microsoft.com/en-us/library/ms535854(v=VS.85).aspx
-						 */
-						else if (node.ownerDocument.documentElement === node && typeof node.ownerDocument.namespaces === 'object')
-						{
-							for(i=0; i<node.ownerDocument.namespaces.length; i++)
+						} else {
+							/**
+							 * IE puts all namespaces inside document.namespaces for HTML node
+							 *
+							 * @see http://msdn.microsoft.com/en-us/library/ms537470(VS.85).aspx
+							 * @see http://msdn.microsoft.com/en-us/library/ms535854(v=VS.85).aspx
+							 */
+							if (node.ownerDocument.documentElement === node && typeof node.ownerDocument.namespaces === 'object')
 							{
-								namespace = node.ownerDocument.namespaces.item(i);
-								if (namespace.name == prefix)
+								for(i=0; i<node.ownerDocument.namespaces.length; i++)
 								{
-									return namespace.urn;
+									namespace = node.ownerDocument.namespaces.item(i);
+									if (namespace.name == prefix)
+									{
+										return namespace.urn;
+									}
 								}
 							}
-						}
-						/**
-						 * Normal attribute checking for namespace declarations
-						 */
-						else
-						{
+							
+							/**
+							 * Normal attribute checking for namespace declarations
+							 */
 							for(i=0; i<node.attributes.length; i++)
 							{
 								if (!node.attributes[i].specified)
