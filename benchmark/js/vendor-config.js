@@ -77,7 +77,7 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 	}
 	
 	libs.push({
-		name: "Wicked Good XPath",
+		name: "WGXP overwriting Native",
 		link: "https://code.google.com/p/wicked-good-xpath/",
 		scripts: [
 			"../benchmark/vendor/wicked-good-xpath/wgxpath.install.js"
