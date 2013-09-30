@@ -101,5 +101,3 @@ git submodule init
 git submodule update
 ant build
 ```
-
-NOTE: Currently the build script only works in Windows, but it can be easily adjusted to work in Linux. Take a look at [build.xml](https://github.com/andrejpavlovic/xpathjs/blob/master/build.xml) file.
