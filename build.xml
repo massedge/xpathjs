@@ -2,7 +2,14 @@
 <project name="XPathJS" default="build">
 	<!-- properties -->
 	<property name="yuicompressor.file" value="lib/yuicompressor/build/yuicompressor-2.4.8pre.jar"/>
-	<property name="pegjs.file" value="pegjs"/>
+	
+	<condition property="pegjs.file" value="pegjs">
+		<os family="unix" />
+	</condition>
+
+	<condition property="pegjs.file" value="pegjs.cmd">
+		<os family="windows" />
+	</condition>
 	
 	<!-- clean -->
 	<target name="clean">
@@ -15,7 +22,7 @@
 	<target name="build" depends="clean">
 		
 		<!-- generate parser from grammar -->
-		<apply executable="pegjs.cmd" parallel="false" dest="build" failonerror="true">
+		<apply executable="${pegjs.file}" parallel="false" dest="build" failonerror="true">
 			<fileset file="src/parser.pegjs"/>
 			<arg line="--export-var"/>
 			<arg line="XPathJS._parser"/>
