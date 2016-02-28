@@ -1,0 +1,21 @@
+{
+    "name": "xpathjs",
+    "version": "0.1.0",
+    "author": "Andrej Pavlovic <andrej.pavlovic@pokret.org>",
+    "copyright": "Copyright (c) 2016 Andrej Pavlovic. All rights reserved.",
+
+    "license": "AGPL-3.0",
+    
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andrejpavlovic/xpathjs.git"
+    },
+
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-clean": "1.0.0",
+        "grunt-contrib-concat": "1.0.0",
+        "grunt-contrib-uglify": "0.11.1",
+        "grunt-peg": "2.0.1"
+    }
+}

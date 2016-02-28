@@ -33,9 +33,9 @@ YUI.add('xpathjs-vendor-config', function (Y) {
 		name: "XpathJS",
 		link: "https://github.com/andrejpavlovic/xpathjs",
 		scripts: [
-			"../build/xpathjs.min.js"
+			"../dist/xpathjs.min.js"
 			//"../src/engine.js",
-			//"../build/parser.js"
+			//"../dist/parser.js"
 		],
 		initFn: function(win, options) {
 			var bindingOptions = {};

@@ -17,7 +17,7 @@ For example:
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<script src="../build/xpathjs.js" type="text/javascript"></script>
+		<script src="../dist/xpathjs.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="myDiv"></div>
@@ -52,7 +52,7 @@ You can also add your own id definitions like in the following example:
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:myns="http://www.pokret.org/example">
 	<head>
-		<script src="../build/xpathjs.js" type="text/javascript"></script>
+		<script src="../dist/xpathjs.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="myDiv" myns:myid="mySpecialDiv"></div>

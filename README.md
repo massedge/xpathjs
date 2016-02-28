@@ -16,7 +16,7 @@ Features
 Getting Started
 --------
 
-  1. Download [build/xpathjs.min.js](https://raw.github.com/andrejpavlovic/xpathjs/master/build/xpathjs.min.js) file.
+  1. Download [dist/xpathjs.min.js](dist/xpathjs.min.js) file.
   
   2. Include xpathjs.min.js in the \<head> of your HTML document.
      NOTE: Make sure HTML document is in strict mode i.e. it has a !DOCTYPE declaration at the top!
@@ -88,16 +88,14 @@ Build
 
 In order to build the code yourself, you will need the following tools:
 
-  1. [Apache Ant](http://ant.apache.org/)
-  2. [Node.js](http://nodejs.org/)
-  3. [PEG.js](http://pegjs.majda.cz/) (_npm install --global pegjs_)
+  - [Node.js](http://nodejs.org/)
+  - [Bower](http://bower.io/)
 
 Once the tools are installed, do the following:
 
 ```bash
 git clone https://github.com/andrejpavlovic/xpathjs.git
 cd xpathjs
-git submodule init
-git submodule update
-ant build
+npm install
+grunt dist
 ```

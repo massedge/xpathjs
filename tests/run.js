@@ -58,7 +58,7 @@ YUI().use("node", "test-console", function (Y) {
 		
 		if (!useNative) {
 			scripts.push("../src/engine.js");
-			scripts.push("../build/parser.js");
+			scripts.push("../dist/parser.js");
 		}
 		
 		// load all xpath scripts for this library
