@@ -7562,7 +7562,7 @@ XPathJS._parser = (function() {
     	
     	,predicateExpression = function(expr, axis, predicate, predicateIndex)
     	{
-    		var predicates = [];
+    		var i, predicates = [];
     		
     		if (predicate.length < 1)
     		{
