@@ -163,23 +163,3 @@ Example:
 ```
 
 The ATTLIST declaration will have no effect on XPathJS.
-
-
-IE6 - Exception Bug
---------
-
-Exceptions that originate from a function attached to the _document_ object will not propagate outside of the function. This is important to note in calls such as:
-
-```javascript
-document.createExpression('/div/+++', null);
-```
-
-Since the above is an invalid XPath expression, an INVALID_EXPRESSION_ERR will be thrown in all browsers except IE6. IE6 will just ignore the expection.
-
-The only way to ensure that exceptions are thrown in all browsers including IE6 is to either not attach XPath functions to *document*, or to call the function like so:
-
-```javascript
-document.createExpresssion.call(document, '/div/span', null);
-```
-
-See [Stack Overflow discussion](http://stackoverflow.com/questions/7459173/ie6-try-catch-block-does-not-work-on-custom-document-somefunction-call) for more details.

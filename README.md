@@ -6,7 +6,7 @@ XPathJS is a pure JavaScript implementation of [XPath 1.0](http://www.w3.org/TR/
 Features
 --------
 
-  * Works in all major browsers: IE6+, Firefox, Chrome, Safari, Opera
+  * Works in all major browsers: IE8+, Firefox, Chrome, Safari, Opera
   * Supports XML namespaces!
   * No external dependencies, include just a single .js file
   * Regression tested against [hundreds of unit test cases](http://www.pokret.org/xpathjs/tests/).
