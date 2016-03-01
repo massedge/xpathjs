@@ -1,35 +1,10 @@
-<?php
-/**
- * Copyright (C) 2011 Andrej Pavlovic
- *
- * This file is part of XPathJS.
- *
- * XPathJS is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, version 3 of the License.
- *
- * XPathJS is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-$serve_xml = !empty($_GET['xml']);
-
-if ($serve_xml)
-	header('Content-Type: application/xhtml+xml');
-?>
 <!DOCTYPE html>
-<!-- some comment -->
-<html xml:lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://some-namespace.com/nss">
+<html xml:lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://some-namespace.com/nss" version="1a">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>xpath-test</title>
 	</head>
-	<body class="yui3-skin-sam">
+	<body class="yui3-skin-sam" id="body">
 		<div id="testXPathNSResolver">
 			<div id="testXPathNSResolverNode" xmlns:xforms="http://www.w3.org/2002/xforms">
 				<div xmlns="http://www.w3.org/TR/REC-html40">
@@ -66,13 +41,28 @@ if ($serve_xml)
 				<p>3</p>
 				<p>4</p>
 			</div>
+
+			<div id="testFunctionNodeset3">
+				<div>
+					<p>1</p>
+				</div>
+				<div>
+					<p id="testFunctionNodeset3NodeP">2</p>
+				</div>
+				<div>
+					<p>3</p>
+				</div>
+				<div>
+					<p>4</p>
+				</div>
+			</div>
 			
 			<div id="testFunctionNodesetElement">aaa</div>
 			<div id="testFunctionNodesetElementPrefix"><ev:div2></ev:div2></div>
 			<div id="testFunctionNodesetElementNested"><span>bbb</span>sss<span></span><div>ccc<span>ddd</span></div></div>
 			<div id="testFunctionNodesetComment"><!-- hello world --></div>
 			<div id="testFunctionNodesetText">here is some text</div>
-			<div id="testFunctionNodesetProcessingInstruction"><?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?></div>
+			<div id="testFunctionNodesetProcessingInstruction"><?xml-stylesheet type="text/xml" href="test.xsl"?></div>
 			<div id="testFunctionNodesetCData"><![CDATA[some cdata]]></div>
 			<div id="testFunctionNodesetAttribute" ev:class="123" width="  1   00%  "></div>
 			<div id="testFunctionNodesetNamespace" xmlns:asdf="http://www.123.com/"></div>
@@ -83,7 +73,7 @@ if ($serve_xml)
 			<div id="FunctionStringCaseStringNodesetElementNested"><span>bbb</span>sss<span></span><div>ccc<span>ddd</span></div></div>
 			<div id="FunctionStringCaseStringNodesetComment"><!-- hello world --></div>
 			<div id="FunctionStringCaseStringNodesetText">here is some text</div>
-			<div id="FunctionStringCaseStringNodesetProcessingInstruction"><?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?></div>
+			<div id="FunctionStringCaseStringNodesetProcessingInstruction"><?xml-stylesheet type="text/xml" href="test.xsl"?></div>
 			<div id="FunctionStringCaseStringNodesetCData"><![CDATA[some cdata]]></div>
 			<div id="FunctionStringCaseStringNodesetAttribute" class="123" width="  1   00%  "></div>
 			<div id="FunctionStringCaseStringNodesetNamespace" xmlns:asdf="http://www.123.com/"></div>
@@ -117,9 +107,19 @@ if ($serve_xml)
 				<div id="testContextNodeParameterText">some text</div>
 				<div id="testContextNodeParameterCData"><![CDATA[aa<strong>some text</strong>]]></div>
 				<div id="testContextNodeParameterComment"><!-- here is comment --></div>
-				<div id="testContextNodeParameterProcessingInstruction"><?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?></div>
+				<div id="testContextNodeParameterProcessingInstruction"><?xml-stylesheet type="text/xml" href="test.xsl"?></div>
 				<div id="testContextNodeParameterNamespace" xmlns:asdf="http://some-namespace/"></div>
 			</div>
+		</div>
+
+		<div id="FunctionBooleanEmptyNode">
+			<div></div>
+		</div>
+
+		<div id="FunctionSumCaseJavarosa">
+			<div>-10</div>
+			<div>15</div>
+			<div></div>
 		</div>
 		
 		<div id="StepAxisCase">
@@ -128,7 +128,7 @@ if ($serve_xml)
 			<div id="testStepAxisNodeAttribute" style="sss:asdf;" width="100%"></div>
 			<div id="testStepAxisNodeCData"><![CDATA[aa<strong>some text</strong>]]><div></div>asdf</div>
 			<div id="testStepAxisNodeComment"><!-- here is comment --><div></div>asdf</div>
-			<div id="testStepAxisNodeProcessingInstruction"><?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?><div></div>asdf</div>
+			<div id="testStepAxisNodeProcessingInstruction"><?xml-stylesheet type="text/xml" href="test.xsl"?><div></div>asdf</div>
 			<div id="testStepAxisNodeNamespace" xmlns:asdf="http://some-namespace/" width="100%"></div>
 			
 			<div id="testStepAxisChild">
@@ -206,13 +206,13 @@ if ($serve_xml)
 			asdf
 			asdfsdf sdf 
 			<div></div>
-			<?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?>
+			<?xml-stylesheet type="text/xml" href="test.xsl"?>
 			<div></div>
 			sdfsdf
 			<![CDATA[aa<strong>some text</strong>]]>
 			<!-- comment -->
 			<div></div>
-			<?php echo '<?custom-process-instruct type="text/xml" href="test.xsl"?>' ?>
+			<?custom-process-instruct type="text/xml" href="test.xsl"?>
 			<div></div>
 		</div>
 		
@@ -244,7 +244,7 @@ if ($serve_xml)
 			<div id="LocationPathCaseText">some text</div>
 			<div id="LocationPathCaseComment"><!-- some comment --></div>
 			<div id="LocationPathCaseCData"><![CDATA[some cdata]]></div>
-			<div id="LocationPathCaseProcessingInstruction"><?php echo '<?xml-stylesheet type="text/xml" href="test.xsl"?>' ?></div>
+			<div id="LocationPathCaseProcessingInstruction"><?xml-stylesheet type="text/xml" href="test.xsl"?></div>
 			<div id="LocationPathCaseAttribute" class="123" width="100%"></div>
 			<div id="LocationPathCaseNamespace" xmlns:asdf="http://www.123.com/"></div>
 			
