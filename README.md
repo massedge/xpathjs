@@ -82,20 +82,3 @@ Here are some other javascript-based XPath alternatives out there:
   * [Llama's XPath.js](http://llamalab.com/js/xpath/) - tiniest
   * [Cameron McCormack](http://mcc.id.au/xpathjs) - non-standard interface, but should have namespace support
   * [Google AJAXSLT](http://goog-ajaxslt.sourceforge.net/) - oldest
-
-Build
---------
-
-In order to build the code yourself, you will need the following tools:
-
-  - [Node.js](http://nodejs.org/)
-  - [Bower](http://bower.io/)
-
-Once the tools are installed, do the following:
-
-```bash
-git clone https://github.com/andrejpavlovic/xpathjs.git
-cd xpathjs
-npm install
-grunt dist
-```
