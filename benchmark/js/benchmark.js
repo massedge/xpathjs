@@ -289,7 +289,7 @@ YUI({useBrowserConsole: false}).use("node", "xpathjs-vendor-config", "xpathjs-te
 				// load all xpath scripts for this library
 				lib.scripts.unshift("../tests/tests.js");
 				lib.scripts.unshift("../benchmark/js/vendor-config.js");
-				lib.scripts.unshift("http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js");
+				lib.scripts.unshift("https://yui-s.yahooapis.com/3.5.0/build/yui/yui-min.js");
 				
 				Y.Get.script(lib.scripts, {
 					onSuccess: function (e) {

@@ -52,7 +52,7 @@ YUI().use("node", "test-console", function (Y) {
 	
 	function attachScripts(win, useNative, useXml) {
 		var scripts = [
-			"http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js",
+			"https://yui-s.yahooapis.com/3.5.0/build/yui/yui-min.js",
 			"tests.js"
 		];
 		

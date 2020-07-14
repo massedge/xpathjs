@@ -23,11 +23,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>xpath-test</title>
 		
-		<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset.css" type="text/css" />
-		<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssfonts/cssfonts.css" type="text/css" />
-		<link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssbase/cssbase.css" type="text/css" />
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/3.5.0/build/cssreset/cssreset.css" type="text/css" />
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/3.5.0/build/cssfonts/cssfonts.css" type="text/css" />
+		<link rel="stylesheet" href="https://yui-s.yahooapis.com/3.5.0/build/cssbase/cssbase.css" type="text/css" />
 		
-		<script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js" type="text/javascript"></script>
+		<script src="https://yui-s.yahooapis.com/3.5.0/build/yui/yui-min.js" type="text/javascript"></script>
 		<script src="run.js" type="text/javascript"></script>
 		
 		<style type="text/css">
