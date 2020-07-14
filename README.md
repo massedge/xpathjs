@@ -18,7 +18,7 @@ Getting Started
 
   1. `npm install xpathjs` then `import 'xpathjs'` at the top of your js file<br><br>
      or<br><br>
-     Add `<script src="https://unpkg.com/xpathjs@0.2.0/dist/xpathjs.min.js"></script>` in the \<head> of your HTML document.
+     Add `<script src="https://unpkg.com/@mass-edge/xpathjs@0.2.1/dist/xpathjs.min.js"></script>` in the \<head> of your HTML document.
 
   1. Initialize XPathJS:
       ```javascript
