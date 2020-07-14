@@ -67,13 +67,3 @@ Development
   * [Issue tracker](https://github.com/andrejpavlovic/xpathjs/issues)
 
 XPathJS is developed by [Andrej Pavlovic](mailto:andrej.pavlovic@pokret.org). You are more than welcome to contribute by [logging issues](https://github.com/andrejpavlovic/xpathjs/issues), [sending pull requests](http://help.github.com/send-pull-requests/), or [just giving feedback](mailto:andrej.pavlovic@pokret.org).
-
-Alternatives
---------
-
-Here are some other javascript-based XPath alternatives out there:
-
-  * [JavaScript-XPath](http://coderepos.org/share/wiki/JavaScript-XPath) - fastest
-  * [Llama's XPath.js](http://llamalab.com/js/xpath/) - tiniest
-  * [Cameron McCormack](http://mcc.id.au/xpathjs) - non-standard interface, but should have namespace support
-  * [Google AJAXSLT](http://goog-ajaxslt.sourceforge.net/) - oldest
