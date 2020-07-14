@@ -1,6 +1,6 @@
 {
     "name": "xpathjs",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": "Andrej Pavlovic <andrej.pavlovic@pokret.org>",
     "license": "MIT",
     "repository": {
@@ -12,11 +12,11 @@
         "prepublishOnly": "npm run build"
     },
     "files": [
-      "/dist/xpathjs.js",
-      "/dist/xpathjs.min.js",
-      "/dist/xpathjs.min.js.map",
-      "/package.json",
-      "/README.md"
+        "/dist/xpathjs.js",
+        "/dist/xpathjs.min.js",
+        "/dist/xpathjs.min.js.map",
+        "/package.json",
+        "/README.md"
     ],
     "devDependencies": {
         "grunt": "^1.2.1",

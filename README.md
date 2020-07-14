@@ -16,35 +16,32 @@ Features
 Getting Started
 --------
 
-  1. Download [dist/xpathjs.min.js](dist/xpathjs.min.js) file.
-  
-  2. Include xpathjs.min.js in the \<head> of your HTML document.
-     NOTE: Make sure HTML document is in strict mode i.e. it has a !DOCTYPE declaration at the top!
-  
-  3. Initialize XPathJS:
-     
-     ```javascript
-    // bind XPath methods to document and window objects
-    // NOTE: This will overwrite native XPath implementation if it exists
-    XPathJS.bindDomLevel3XPath();
-    ```
-     
-  4. You can now use XPath expressions to query the DOM:
-     
-     ```javascript
-    var result = document.evaluate(
-        '//ul/li/text()', // XPath expression
-        document, // context node
-        null, // namespace resolver
-        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
-    );
-    
-    // loop through results
-    for (var i = 0; i < result.snapshotLength; i++) {
-        var node = result.snapshotItem(i);
-        alert(node.nodeValue);
-    }
-    ```
+  1. `npm install xpathjs` then `import 'xpathjs'` at the top of your js file<br><br>
+     or<br><br>
+     Add `<script src="https://unpkg.com/xpathjs@0.2.0/dist/xpathjs.min.js"></script>` in the \<head> of your HTML document.
+
+  1. Initialize XPathJS:
+      ```javascript
+      // bind XPath methods to document and window objects
+      // NOTE: This will overwrite native XPath implementation if it exists
+      window.XPathJS.bindDomLevel3XPath();
+      ```
+
+  1. You can now use XPath expressions to query the DOM:
+      ```javascript
+      var result = document.evaluate(
+          '//ul/li/text()', // XPath expression
+          document, // context node
+          null, // namespace resolver
+          XPathResult.ORDERED_NODE_SNAPSHOT_TYPE
+      );
+
+      // loop through results
+      for (var i = 0; i < result.snapshotLength; i++) {
+          var node = result.snapshotItem(i);
+          alert(node.nodeValue);
+      }
+      ```
 
 Take a look at some [working examples](http://www.pokret.org/xpathjs/examples/) to get a better idea of how to use XPathJS.
 
