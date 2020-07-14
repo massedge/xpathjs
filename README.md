@@ -68,11 +68,6 @@ Development
 
 XPathJS is developed by [Andrej Pavlovic](mailto:andrej.pavlovic@pokret.org). You are more than welcome to contribute by [logging issues](https://github.com/andrejpavlovic/xpathjs/issues), [sending pull requests](http://help.github.com/send-pull-requests/), or [just giving feedback](mailto:andrej.pavlovic@pokret.org).
 
-License
---------
-
-We have released XPathJS under the AGPLv3. Note that we sell commercial licenses as well. You will need to sign a contributor agreement when contributing code due to the dual-license nature of the project.
-
 Alternatives
 --------
 

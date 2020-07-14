@@ -2,7 +2,7 @@
     "name": "xpathjs",
     "version": "0.1.0",
     "author": "Andrej Pavlovic <andrej.pavlovic@pokret.org>",
-    "license": "AGPL-3.0",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/andrejpavlovic/xpathjs.git"
