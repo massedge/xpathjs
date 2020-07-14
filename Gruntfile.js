@@ -34,8 +34,11 @@ module.exports = function(grunt) {
 
         uglify: {
             dist: {
+                options: {
+                    sourceMap: true,
+                },
                 src: 'dist/xpathjs.js',
-                dest: 'dist/xpathjs.min.js'
+                dest: 'dist/xpathjs.min.js',
             }
         }
     });

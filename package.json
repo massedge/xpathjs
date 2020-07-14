@@ -12,7 +12,9 @@
         "prepublishOnly": "npm run build"
     },
     "files": [
+      "/dist/xpathjs.js",
       "/dist/xpathjs.min.js",
+      "/dist/xpathjs.min.js.map",
       "/package.json",
       "/README.md"
     ],
