@@ -1,5 +1,6 @@
 {
-    "name": "xpathjs",
+    "name": "@mass-edge/xpathjs",
+    "description": "XPathJS is a pure JavaScript implementation of XPath 1.0 and DOM Level 3 XPath specifications.",
     "version": "0.2.0",
     "author": "Andrej Pavlovic <andrej.pavlovic@pokret.org>",
     "license": "MIT",
